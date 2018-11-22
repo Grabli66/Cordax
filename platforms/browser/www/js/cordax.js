@@ -77,7 +77,7 @@ Main.main = function() {
 Main.prototype = {
 	render: function() {
 		var _gthis = this;
-		var app = tink_state__$Observable_Observable_$Impl_$["const"]("Test Cordax");
+		var app = tink_state__$Observable_Observable_$Impl_$["const"]("Cordax");
 		var this1 = { f : function() {
 			var this2 = { f : function() {
 				var this3 = { f : function() {
@@ -89,20 +89,35 @@ Main.prototype = {
 					}};
 					return new components_IconButton({ icon : this4, onclick : tink_state__$Observable_Observable_$Impl_$.auto(this5)});
 				}};
-				return new components_AppBar({ leading : tink_state__$Observable_Observable_$Impl_$.auto(this3), title : tink_state__$Observable_Observable_$Impl_$["const"]("Simple app")});
+				var this6 = tink_state__$Observable_Observable_$Impl_$.auto(this3);
+				var this7 = { f : function() {
+					return new components_Text({ text : tink_state__$Observable_Observable_$Impl_$["const"]("Cordax app")});
+				}};
+				return new components_AppBar({ leading : this6, title : tink_state__$Observable_Observable_$Impl_$.auto(this7)});
 			}};
-			var this6 = tink_state__$Observable_Observable_$Impl_$.auto(this2);
-			var this7 = { f : function() {
-				var this8 = { f : function() {
+			var this8 = tink_state__$Observable_Observable_$Impl_$.auto(this2);
+			var this9 = { f : function() {
+				var this10 = { f : function() {
 					return _gthis.drawerModel;
 				}};
-				var this9 = tink_state__$Observable_Observable_$Impl_$.auto(this8);
-				var this10 = { f : function() {
-					return tink_pure__$List_List_$Impl_$.fromArray([new components_SimpleDrawerHeader({ photo : tink_state__$Observable_Observable_$Impl_$["const"]("img/avatar.png"), name : tink_state__$Observable_Observable_$Impl_$["const"]("Donkey Kong"), email : tink_state__$Observable_Observable_$Impl_$["const"]("donkey1988@gmail.com")}),new components_ListView({ })]);
+				var this11 = tink_state__$Observable_Observable_$Impl_$.auto(this10);
+				var this12 = { f : function() {
+					var this13 = new components_SimpleDrawerHeader({ photo : tink_state__$Observable_Observable_$Impl_$["const"]("img/avatar.png"), name : tink_state__$Observable_Observable_$Impl_$["const"]("Donkey Kong"), email : tink_state__$Observable_Observable_$Impl_$["const"]("donkey1988@gmail.com")});
+					var this14 = { f : function() {
+						var this15 = { f : function() {
+							return new components_Image({ src : tink_state__$Observable_Observable_$Impl_$["const"]("img/avatar.png")});
+						}};
+						return tink_pure__$List_List_$Impl_$.fromArray([new components_SimpleListViewItem({ leading : new components_CircleAvatar({ content : tink_state__$Observable_Observable_$Impl_$.auto(this15)}), title : new components_Text({ text : tink_state__$Observable_Observable_$Impl_$["const"]("Monkey")})})]);
+					}};
+					var this16 = tink_state__$Observable_Observable_$Impl_$.auto(this14);
+					var this17 = { f : function() {
+						return new components_SimpleListViewAdapter();
+					}};
+					return tink_pure__$List_List_$Impl_$.fromArray([this13,new components_ListView({ source : this16, adapter : tink_state__$Observable_Observable_$Impl_$.auto(this17)})]);
 				}};
-				return new components_Drawer({ key : this9, childs : tink_state__$Observable_Observable_$Impl_$.auto(this10)});
+				return new components_Drawer({ key : this11, childs : tink_state__$Observable_Observable_$Impl_$.auto(this12)});
 			}};
-			return new components_Scaffold({ appBar : this6, drawer : tink_state__$Observable_Observable_$Impl_$.auto(this7)});
+			return new components_Scaffold({ appBar : this8, drawer : tink_state__$Observable_Observable_$Impl_$.auto(this9)});
 		}};
 		var app1 = new components_App({ title : app, content : tink_state__$Observable_Observable_$Impl_$.auto(this1)});
 		window.document.body.appendChild(app1.toElement());
@@ -714,9 +729,9 @@ coconut_ui_tools__$ViewCache_Key_$Impl_$.ofAny = function(o) {
 	return o;
 };
 var components_App = function(data) {
-	this.__tink_defaults14 = { title : tink_state__$Observable_Observable_$Impl_$["const"]("Cordax")};
+	this.__tink_defaults26 = { title : tink_state__$Observable_Observable_$Impl_$["const"]("Cordax")};
 	this.__slots = { title : new coconut_ui_tools_Slot(this,null), content : new coconut_ui_tools_Slot(this,null)};
-	this.__tink_init15(data);
+	this.__tink_init27(data);
 	coconut_ui_View.call(this,$bind(this,this.render));
 };
 components_App.__name__ = true;
@@ -724,7 +739,7 @@ components_App.__init = function(attributes,inst) {
 	if(inst == null) {
 		inst = new components_App(attributes);
 	} else {
-		inst.__tink_init15(attributes);
+		inst.__tink_init27(attributes);
 	}
 	return inst;
 };
@@ -735,7 +750,7 @@ components_App.prototype = $extend(coconut_ui_View.prototype,{
 		var tmp1 = tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.title.observe());
 		tmp[0].innerText = tmp1;
 		var __r = [];
-		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("application")};
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("application flex-1")};
 		var __r1 = [];
 		__r1.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.content.observe()));
 		__r.push(vdom_VDom.h("div",__ret,__r1));
@@ -744,9 +759,9 @@ components_App.prototype = $extend(coconut_ui_View.prototype,{
 	,toString: function() {
 		return "App" + "#" + this.viewId;
 	}
-	,__tink_init15: function(attributes) {
+	,__tink_init27: function(attributes) {
 		var this1 = attributes.title;
-		this.__slots.title.setData(this1 == null ? this.__tink_defaults14.title : this1);
+		this.__slots.title.setData(this1 == null ? this.__tink_defaults26.title : this1);
 		this.__slots.content.setData(attributes.content);
 	}
 	,get_title: function() {
@@ -758,9 +773,9 @@ components_App.prototype = $extend(coconut_ui_View.prototype,{
 	,__class__: components_App
 });
 var components_AppBar = function(data) {
-	this.__tink_defaults10 = { leading : null, title : null, actions : null};
+	this.__tink_defaults14 = { leading : null, title : null, actions : null};
 	this.__slots = { leading : new coconut_ui_tools_Slot(this,null), title : new coconut_ui_tools_Slot(this,null), actions : new coconut_ui_tools_Slot(this,null)};
-	this.__tink_init11(data);
+	this.__tink_init15(data);
 	coconut_ui_View.call(this,$bind(this,this.render));
 };
 components_AppBar.__name__ = true;
@@ -768,47 +783,46 @@ components_AppBar.__init = function(attributes,inst) {
 	if(inst == null) {
 		inst = new components_AppBar(attributes);
 	} else {
-		inst.__tink_init11(attributes);
+		inst.__tink_init15(attributes);
 	}
 	return inst;
 };
 components_AppBar.__super__ = coconut_ui_View;
 components_AppBar.prototype = $extend(coconut_ui_View.prototype,{
 	render: function() {
+		var _gthis = this;
+		var row = tink_state__$Observable_Observable_$Impl_$["const"]("40px");
+		var this1 = { f : function() {
+			var this2 = { f : function() {
+				var this3 = { f : function() {
+					return tink_pure__$List_List_$Impl_$.fromArray([tink_state__$Observable_Observable_$Impl_$.get_value(_gthis.__slots.leading.observe()),tink_state__$Observable_Observable_$Impl_$.get_value(_gthis.__slots.title.observe()),tink_state__$Observable_Observable_$Impl_$.get_value(_gthis.__slots.actions.observe())]);
+				}};
+				return new components_layouts_Row({ childs : tink_state__$Observable_Observable_$Impl_$.auto(this3)});
+			}};
+			var this4 = tink_state__$Observable_Observable_$Impl_$.auto(this2);
+			var this5 = { f : function() {
+				return new components_layouts_PaddingSettings({ left : 8, right : 8});
+			}};
+			return new components_layouts_Padding({ child : this4, padding : tink_state__$Observable_Observable_$Impl_$.auto(this5)});
+		}};
+		var row1 = new components_layouts_Container({ height : row, child : tink_state__$Observable_Observable_$Impl_$.auto(this1)});
 		var __r = [];
-		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("app-bar")};
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("app-bar flex-1")};
 		var __r1 = [];
-		if(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.leading.observe()) != null) {
-			var __ret1 = { className : vdom__$Attr_ClassName_$Impl_$.ofString("leading")};
-			var __r2 = [];
-			__r2.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.leading.observe()));
-			__r1.push(vdom_VDom.h("div",__ret1,__r2));
-		}
-		if(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.title.observe()) != null) {
-			var __ret2 = { className : vdom__$Attr_ClassName_$Impl_$.ofString("title")};
-			var __r3 = [];
-			__r3.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.title.observe()));
-			__r1.push(vdom_VDom.h("div",__ret2,__r3));
-		}
-		if(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.leading.observe()) != null) {
-			var __ret3 = { className : vdom__$Attr_ClassName_$Impl_$.ofString("actions")};
-			var __r4 = [];
-			__r4.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.actions.observe()));
-			__r1.push(vdom_VDom.h("div",__ret3,__r4));
-		}
+		__r1.push(row1);
 		__r.push(vdom_VDom.h("div",__ret,__r1));
 		return __r[0];
 	}
 	,toString: function() {
 		return "AppBar" + "#" + this.viewId;
 	}
-	,__tink_init11: function(attributes) {
+	,__tink_init15: function(attributes) {
 		var this1 = attributes.leading;
-		this.__slots.leading.setData(this1 == null ? this.__tink_defaults10.leading : this1);
+		this.__slots.leading.setData(this1 == null ? this.__tink_defaults14.leading : this1);
 		var this2 = attributes.title;
-		this.__slots.title.setData(this2 == null ? this.__tink_defaults10.title : this2);
+		this.__slots.title.setData(this2 == null ? this.__tink_defaults14.title : this2);
 		var this3 = attributes.actions;
-		this.__slots.actions.setData(this3 == null ? this.__tink_defaults10.actions : this3);
+		this.__slots.actions.setData(this3 == null ? this.__tink_defaults14.actions : this3);
 	}
 	,get_leading: function() {
 		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.leading.observe());
@@ -820,6 +834,42 @@ components_AppBar.prototype = $extend(coconut_ui_View.prototype,{
 		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.actions.observe());
 	}
 	,__class__: components_AppBar
+});
+var components_CircleAvatar = function(data) {
+	this.__tink_defaults2 = { };
+	this.__slots = { content : new coconut_ui_tools_Slot(this,null)};
+	this.__tink_init3(data);
+	coconut_ui_View.call(this,$bind(this,this.render));
+};
+components_CircleAvatar.__name__ = true;
+components_CircleAvatar.__init = function(attributes,inst) {
+	if(inst == null) {
+		inst = new components_CircleAvatar(attributes);
+	} else {
+		inst.__tink_init3(attributes);
+	}
+	return inst;
+};
+components_CircleAvatar.__super__ = coconut_ui_View;
+components_CircleAvatar.prototype = $extend(coconut_ui_View.prototype,{
+	render: function() {
+		var __r = [];
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("circle-avatar")};
+		var __r1 = [];
+		__r1.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.content.observe()));
+		__r.push(vdom_VDom.h("div",__ret,__r1));
+		return __r[0];
+	}
+	,toString: function() {
+		return "CircleAvatar" + "#" + this.viewId;
+	}
+	,__tink_init3: function(attributes) {
+		this.__slots.content.setData(attributes.content);
+	}
+	,get_content: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.content.observe());
+	}
+	,__class__: components_CircleAvatar
 });
 var components_DrawerKey = function(init) {
 	if(init == null) {
@@ -905,9 +955,9 @@ var components_Drawer = function(data) {
 	var this1 = { f : function() {
 		return new components_DrawerKey();
 	}};
-	this.__tink_defaults6 = { key : tink_state__$Observable_Observable_$Impl_$.auto(this1), childs : null};
+	this.__tink_defaults10 = { key : tink_state__$Observable_Observable_$Impl_$.auto(this1), childs : null};
 	this.__slots = { key : new coconut_ui_tools_Slot(this,null), childs : new coconut_ui_tools_Slot(this,null)};
-	this.__tink_init7(data);
+	this.__tink_init11(data);
 	coconut_ui_View.call(this,$bind(this,this.render));
 };
 components_Drawer.__name__ = true;
@@ -915,7 +965,7 @@ components_Drawer.__init = function(attributes,inst) {
 	if(inst == null) {
 		inst = new components_Drawer(attributes);
 	} else {
-		inst.__tink_init7(attributes);
+		inst.__tink_init11(attributes);
 	}
 	return inst;
 };
@@ -950,11 +1000,11 @@ components_Drawer.prototype = $extend(coconut_ui_View.prototype,{
 	,toString: function() {
 		return "Drawer" + "#" + this.viewId;
 	}
-	,__tink_init7: function(attributes) {
+	,__tink_init11: function(attributes) {
 		var this1 = attributes.key;
-		this.__slots.key.setData(this1 == null ? this.__tink_defaults6.key : this1);
+		this.__slots.key.setData(this1 == null ? this.__tink_defaults10.key : this1);
 		var this2 = attributes.childs;
-		this.__slots.childs.setData(this2 == null ? this.__tink_defaults6.childs : this2);
+		this.__slots.childs.setData(this2 == null ? this.__tink_defaults10.childs : this2);
 	}
 	,get_key: function() {
 		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.key.observe());
@@ -965,9 +1015,9 @@ components_Drawer.prototype = $extend(coconut_ui_View.prototype,{
 	,__class__: components_Drawer
 });
 var components_IconButton = function(data) {
-	this.__tink_defaults8 = { };
+	this.__tink_defaults12 = { };
 	this.__slots = { icon : new coconut_ui_tools_Slot(this,null), onclick : new coconut_ui_tools_Slot(this,null)};
-	this.__tink_init9(data);
+	this.__tink_init13(data);
 	coconut_ui_View.call(this,$bind(this,this.render));
 };
 components_IconButton.__name__ = true;
@@ -975,7 +1025,7 @@ components_IconButton.__init = function(attributes,inst) {
 	if(inst == null) {
 		inst = new components_IconButton(attributes);
 	} else {
-		inst.__tink_init9(attributes);
+		inst.__tink_init13(attributes);
 	}
 	return inst;
 };
@@ -991,7 +1041,7 @@ components_IconButton.prototype = $extend(coconut_ui_View.prototype,{
 	,toString: function() {
 		return "IconButton" + "#" + this.viewId;
 	}
-	,__tink_init9: function(attributes) {
+	,__tink_init13: function(attributes) {
 		this.__slots.icon.setData(attributes.icon);
 		this.__slots.onclick.setData(attributes.onclick);
 	}
@@ -1003,10 +1053,86 @@ components_IconButton.prototype = $extend(coconut_ui_View.prototype,{
 	}
 	,__class__: components_IconButton
 });
-var components_ListView = function(data) {
+var components_Image = function(data) {
 	this.__tink_defaults0 = { };
-	this.__slots = { };
+	this.__slots = { src : new coconut_ui_tools_Slot(this,null)};
 	this.__tink_init1(data);
+	coconut_ui_View.call(this,$bind(this,this.render));
+};
+components_Image.__name__ = true;
+components_Image.__init = function(attributes,inst) {
+	if(inst == null) {
+		inst = new components_Image(attributes);
+	} else {
+		inst.__tink_init1(attributes);
+	}
+	return inst;
+};
+components_Image.__super__ = coconut_ui_View;
+components_Image.prototype = $extend(coconut_ui_View.prototype,{
+	render: function() {
+		var _gthis = this;
+		var __r = [];
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("image"), src : tink_state__$Observable_Observable_$Impl_$.get_value(_gthis.__slots.src.observe())};
+		__r.push(vdom_VDom.h("img",__ret));
+		return __r[0];
+	}
+	,toString: function() {
+		return "Image" + "#" + this.viewId;
+	}
+	,__tink_init1: function(attributes) {
+		this.__slots.src.setData(attributes.src);
+	}
+	,get_src: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.src.observe());
+	}
+	,__class__: components_Image
+});
+var components_IListViewAdapter = function() { };
+components_IListViewAdapter.__name__ = true;
+components_IListViewAdapter.prototype = {
+	__class__: components_IListViewAdapter
+};
+var components_SimpleListViewItem = function(init) {
+	this.leading = init.leading;
+	this.title = init.title;
+	this.actions = init.actions;
+};
+components_SimpleListViewItem.__name__ = true;
+components_SimpleListViewItem.prototype = {
+	__class__: components_SimpleListViewItem
+};
+var components_SimpleListViewAdapter = function() {
+};
+components_SimpleListViewAdapter.__name__ = true;
+components_SimpleListViewAdapter.__interfaces__ = [components_IListViewAdapter];
+components_SimpleListViewAdapter.prototype = {
+	render: function(item) {
+		var it = js_Boot.__cast(item , components_SimpleListViewItem);
+		var __r = [];
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("list-view-simple-item")};
+		var __r1 = [];
+		if(it.leading != null) {
+			var __ret1 = { className : vdom__$Attr_ClassName_$Impl_$.ofString("leading")};
+			var __r2 = [];
+			__r2.push(it.leading);
+			__r1.push(vdom_VDom.h("div",__ret1,__r2));
+		}
+		if(it.title != null) {
+			var __ret2 = { className : vdom__$Attr_ClassName_$Impl_$.ofString("title")};
+			var __r3 = [];
+			__r3.push(it.title);
+			__r1.push(vdom_VDom.h("div",__ret2,__r3));
+		}
+		__r.push(vdom_VDom.h("div",__ret,__r1));
+		return __r[0];
+	}
+	,__class__: components_SimpleListViewAdapter
+};
+var components_ListView = function(data) {
+	this.__tink_defaults6 = { };
+	this.__slots = { source : new coconut_ui_tools_Slot(this,null), adapter : new coconut_ui_tools_Slot(this,null)};
+	this.__tink_init7(data);
 	coconut_ui_View.call(this,$bind(this,this.render));
 };
 components_ListView.__name__ = true;
@@ -1014,31 +1140,45 @@ components_ListView.__init = function(attributes,inst) {
 	if(inst == null) {
 		inst = new components_ListView(attributes);
 	} else {
-		inst.__tink_init1(attributes);
+		inst.__tink_init7(attributes);
 	}
 	return inst;
 };
 components_ListView.__super__ = coconut_ui_View;
 components_ListView.prototype = $extend(coconut_ui_View.prototype,{
 	render: function() {
+		var _gthis = this;
 		var __r = [];
 		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("listview")};
+		var attr = __ret;
 		var __r1 = [];
-		__r1.push("ListView");
-		__r.push(vdom_VDom.h("div",__ret,__r1));
+		var _g = new tink_pure_NodeIterator(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.source.observe()));
+		while(_g.list.length > 0) {
+			var item = _g.next();
+			__r1.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.adapter.observe()).render(item));
+		}
+		__r.push(vdom_VDom.h("div",attr,__r1));
 		return __r[0];
 	}
 	,toString: function() {
 		return "ListView" + "#" + this.viewId;
 	}
-	,__tink_init1: function(attributes) {
+	,__tink_init7: function(attributes) {
+		this.__slots.source.setData(attributes.source);
+		this.__slots.adapter.setData(attributes.adapter);
+	}
+	,get_source: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.source.observe());
+	}
+	,get_adapter: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.adapter.observe());
 	}
 	,__class__: components_ListView
 });
 var components_Scaffold = function(data) {
-	this.__tink_defaults12 = { drawer : null};
+	this.__tink_defaults22 = { drawer : null};
 	this.__slots = { appBar : new coconut_ui_tools_Slot(this,null), drawer : new coconut_ui_tools_Slot(this,null)};
-	this.__tink_init13(data);
+	this.__tink_init23(data);
 	coconut_ui_View.call(this,$bind(this,this.render));
 };
 components_Scaffold.__name__ = true;
@@ -1046,30 +1186,32 @@ components_Scaffold.__init = function(attributes,inst) {
 	if(inst == null) {
 		inst = new components_Scaffold(attributes);
 	} else {
-		inst.__tink_init13(attributes);
+		inst.__tink_init23(attributes);
 	}
 	return inst;
 };
 components_Scaffold.__super__ = coconut_ui_View;
 components_Scaffold.prototype = $extend(coconut_ui_View.prototype,{
 	render: function() {
+		var _gthis = this;
+		var this1 = { f : function() {
+			return tink_pure__$List_List_$Impl_$.fromArray([tink_state__$Observable_Observable_$Impl_$.get_value(_gthis.__slots.appBar.observe()),tink_state__$Observable_Observable_$Impl_$.get_value(_gthis.__slots.drawer.observe())]);
+		}};
+		var column = new components_layouts_Column({ childs : tink_state__$Observable_Observable_$Impl_$.auto(this1)});
 		var __r = [];
-		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("scaffold")};
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("scaffold flex-1")};
 		var __r1 = [];
-		__r1.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.appBar.observe()));
-		if(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.drawer.observe()) != null) {
-			__r1.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.drawer.observe()));
-		}
+		__r1.push(column);
 		__r.push(vdom_VDom.h("div",__ret,__r1));
 		return __r[0];
 	}
 	,toString: function() {
 		return "Scaffold" + "#" + this.viewId;
 	}
-	,__tink_init13: function(attributes) {
+	,__tink_init23: function(attributes) {
 		this.__slots.appBar.setData(attributes.appBar);
 		var this1 = attributes.drawer;
-		this.__slots.drawer.setData(this1 == null ? this.__tink_defaults12.drawer : this1);
+		this.__slots.drawer.setData(this1 == null ? this.__tink_defaults22.drawer : this1);
 	}
 	,get_appBar: function() {
 		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.appBar.observe());
@@ -1080,9 +1222,9 @@ components_Scaffold.prototype = $extend(coconut_ui_View.prototype,{
 	,__class__: components_Scaffold
 });
 var components_SimpleDrawerHeader = function(data) {
-	this.__tink_defaults4 = { actions : null};
+	this.__tink_defaults8 = { actions : null};
 	this.__slots = { photo : new coconut_ui_tools_Slot(this,null), name : new coconut_ui_tools_Slot(this,null), email : new coconut_ui_tools_Slot(this,null), actions : new coconut_ui_tools_Slot(this,null)};
-	this.__tink_init5(data);
+	this.__tink_init9(data);
 	coconut_ui_View.call(this,$bind(this,this.render));
 };
 components_SimpleDrawerHeader.__name__ = true;
@@ -1090,7 +1232,7 @@ components_SimpleDrawerHeader.__init = function(attributes,inst) {
 	if(inst == null) {
 		inst = new components_SimpleDrawerHeader(attributes);
 	} else {
-		inst.__tink_init5(attributes);
+		inst.__tink_init9(attributes);
 	}
 	return inst;
 };
@@ -1137,12 +1279,12 @@ components_SimpleDrawerHeader.prototype = $extend(coconut_ui_View.prototype,{
 	,toString: function() {
 		return "SimpleDrawerHeader" + "#" + this.viewId;
 	}
-	,__tink_init5: function(attributes) {
+	,__tink_init9: function(attributes) {
 		this.__slots.photo.setData(attributes.photo);
 		this.__slots.name.setData(attributes.name);
 		this.__slots.email.setData(attributes.email);
 		var this1 = attributes.actions;
-		this.__slots.actions.setData(this1 == null ? this.__tink_defaults4.actions : this1);
+		this.__slots.actions.setData(this1 == null ? this.__tink_defaults8.actions : this1);
 	}
 	,get_photo: function() {
 		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.photo.observe());
@@ -1157,6 +1299,325 @@ components_SimpleDrawerHeader.prototype = $extend(coconut_ui_View.prototype,{
 		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.actions.observe());
 	}
 	,__class__: components_SimpleDrawerHeader
+});
+var components_Text = function(data) {
+	this.__tink_defaults4 = { };
+	this.__slots = { text : new coconut_ui_tools_Slot(this,null)};
+	this.__tink_init5(data);
+	coconut_ui_View.call(this,$bind(this,this.render));
+};
+components_Text.__name__ = true;
+components_Text.__init = function(attributes,inst) {
+	if(inst == null) {
+		inst = new components_Text(attributes);
+	} else {
+		inst.__tink_init5(attributes);
+	}
+	return inst;
+};
+components_Text.__super__ = coconut_ui_View;
+components_Text.prototype = $extend(coconut_ui_View.prototype,{
+	render: function() {
+		var __r = [];
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("text")};
+		var __r1 = [];
+		__r1.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.text.observe()));
+		__r.push(vdom_VDom.h("div",__ret,__r1));
+		return __r[0];
+	}
+	,toString: function() {
+		return "Text" + "#" + this.viewId;
+	}
+	,__tink_init5: function(attributes) {
+		this.__slots.text.setData(attributes.text);
+	}
+	,get_text: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.text.observe());
+	}
+	,__class__: components_Text
+});
+var components_layouts_Column = function(data) {
+	this.__tink_defaults24 = { };
+	this.__slots = { childs : new coconut_ui_tools_Slot(this,null)};
+	this.__tink_init25(data);
+	coconut_ui_View.call(this,$bind(this,this.render));
+};
+components_layouts_Column.__name__ = true;
+components_layouts_Column.__init = function(attributes,inst) {
+	if(inst == null) {
+		inst = new components_layouts_Column(attributes);
+	} else {
+		inst.__tink_init25(attributes);
+	}
+	return inst;
+};
+components_layouts_Column.__super__ = coconut_ui_View;
+components_layouts_Column.prototype = $extend(coconut_ui_View.prototype,{
+	render: function() {
+		var _gthis = this;
+		var __r = [];
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("column flex-1")};
+		var attr = __ret;
+		var __r1 = [];
+		var _g = new tink_pure_NodeIterator(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.childs.observe()));
+		while(_g.list.length > 0) {
+			var child = _g.next();
+			__r1.push(child);
+		}
+		__r.push(vdom_VDom.h("div",attr,__r1));
+		return __r[0];
+	}
+	,toString: function() {
+		return "Column" + "#" + this.viewId;
+	}
+	,__tink_init25: function(attributes) {
+		this.__slots.childs.setData(attributes.childs);
+	}
+	,get_childs: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.childs.observe());
+	}
+	,__class__: components_layouts_Column
+});
+var components_layouts_Container = function(data) {
+	this.__tink_defaults16 = { width : tink_state__$Observable_Observable_$Impl_$["const"]("none"), height : tink_state__$Observable_Observable_$Impl_$["const"]("none")};
+	this.__slots = { child : new coconut_ui_tools_Slot(this,null), width : new coconut_ui_tools_Slot(this,null), height : new coconut_ui_tools_Slot(this,null)};
+	this.__tink_init17(data);
+	coconut_ui_View.call(this,$bind(this,this.render));
+};
+components_layouts_Container.__name__ = true;
+components_layouts_Container.__init = function(attributes,inst) {
+	if(inst == null) {
+		inst = new components_layouts_Container(attributes);
+	} else {
+		inst.__tink_init17(attributes);
+	}
+	return inst;
+};
+components_layouts_Container.__super__ = coconut_ui_View;
+components_layouts_Container.prototype = $extend(coconut_ui_View.prototype,{
+	render: function() {
+		var _gthis = this;
+		var __r = [];
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("container flex-0"), style : vdom__$Style_Style_$Impl_$.ofString("width: " + tink_state__$Observable_Observable_$Impl_$.get_value(_gthis.__slots.width.observe()) + "; height: " + tink_state__$Observable_Observable_$Impl_$.get_value(_gthis.__slots.height.observe()))};
+		var __r1 = [];
+		__r1.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.child.observe()));
+		__r.push(vdom_VDom.h("div",__ret,__r1));
+		return __r[0];
+	}
+	,toString: function() {
+		return "Container" + "#" + this.viewId;
+	}
+	,__tink_init17: function(attributes) {
+		this.__slots.child.setData(attributes.child);
+		var this1 = attributes.width;
+		this.__slots.width.setData(this1 == null ? this.__tink_defaults16.width : this1);
+		var this2 = attributes.height;
+		this.__slots.height.setData(this2 == null ? this.__tink_defaults16.height : this2);
+	}
+	,get_child: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.child.observe());
+	}
+	,get_width: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.width.observe());
+	}
+	,get_height: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.height.observe());
+	}
+	,__class__: components_layouts_Container
+});
+var components_layouts_PaddingSettings = function(init) {
+	if(init == null) {
+		init = { };
+	}
+	var _g = init.left;
+	var tmp;
+	if(_g == null) {
+		tmp = 0;
+	} else {
+		var v = _g;
+		tmp = v;
+	}
+	this.left = tmp;
+	var _g1 = init.top;
+	var tmp1;
+	if(_g1 == null) {
+		tmp1 = 0;
+	} else {
+		var v1 = _g1;
+		tmp1 = v1;
+	}
+	this.top = tmp1;
+	var _g2 = init.right;
+	var tmp2;
+	if(_g2 == null) {
+		tmp2 = 0;
+	} else {
+		var v2 = _g2;
+		tmp2 = v2;
+	}
+	this.right = tmp2;
+	var _g3 = init.bottom;
+	var tmp3;
+	if(_g3 == null) {
+		tmp3 = 0;
+	} else {
+		var v3 = _g3;
+		tmp3 = v3;
+	}
+	this.bottom = tmp3;
+	var this1 = new tink_state__$State_SimpleState(0,null,null);
+	this.__coco_transitionCount = this1;
+	this.errorTrigger = tink_core__$Signal_Signal_$Impl_$.trigger();
+	this.transitionErrors = this.errorTrigger;
+	this.observables = { left : tink_state__$Observable_Observable_$Impl_$["const"](this.left), top : tink_state__$Observable_Observable_$Impl_$["const"](this.top), right : tink_state__$Observable_Observable_$Impl_$["const"](this.right), bottom : tink_state__$Observable_Observable_$Impl_$["const"](this.bottom), isInTransition : tink_state__$Observable_Observable_$Impl_$.map(this.__coco_transitionCount,tink_state__$Observable_Transform_$Impl_$.plain(function(count) {
+		return count > 0;
+	}))};
+};
+components_layouts_PaddingSettings.__name__ = true;
+components_layouts_PaddingSettings.__interfaces__ = [coconut_data_Model];
+components_layouts_PaddingSettings.prototype = {
+	get_left: function() {
+		return this.left;
+	}
+	,get_top: function() {
+		return this.top;
+	}
+	,get_right: function() {
+		return this.right;
+	}
+	,get_bottom: function() {
+		return this.bottom;
+	}
+	,__cocoupdate: function(ret) {
+		var _gthis = this;
+		var sync = true;
+		var done = false;
+		ret.handle(function(o) {
+			done = true;
+			if(!sync) {
+				var tmp = tink_state__$State_State_$Impl_$.get_value(_gthis.__coco_transitionCount) - 1;
+				_gthis.__coco_transitionCount.set(tmp);
+			}
+			switch(o._hx_index) {
+			case 0:
+				var delta = o.data;
+				var this1 = { };
+				var sparse = this1;
+				var delta1 = delta;
+				var _g = 0;
+				var _g1 = Reflect.fields(delta1);
+				while(_g < _g1.length) {
+					var k = _g1[_g];
+					++_g;
+					var this2 = new Array(1);
+					var this3 = this2;
+					var ret1 = this3;
+					ret1[0] = delta1[k];
+					sparse[k] = ret1;
+				}
+				var delta2 = sparse;
+				break;
+			case 1:
+				var e = o.failure;
+				tink_core__$Callback_CallbackList_$Impl_$.invoke(_gthis.errorTrigger.handlers,e);
+				break;
+			}
+		});
+		if(!done) {
+			sync = false;
+		}
+		if(!sync) {
+			this.__coco_transitionCount.set(tink_state__$State_State_$Impl_$.get_value(this.__coco_transitionCount) + 1);
+		}
+		return ret;
+	}
+	,get_isInTransition: function() {
+		return tink_state__$State_State_$Impl_$.get_value(this.__coco_transitionCount) > 0;
+	}
+	,__class__: components_layouts_PaddingSettings
+};
+var components_layouts_Padding = function(data) {
+	this.__tink_defaults18 = { };
+	this.__slots = { child : new coconut_ui_tools_Slot(this,null), padding : new coconut_ui_tools_Slot(this,null)};
+	this.__tink_init19(data);
+	coconut_ui_View.call(this,$bind(this,this.render));
+};
+components_layouts_Padding.__name__ = true;
+components_layouts_Padding.__init = function(attributes,inst) {
+	if(inst == null) {
+		inst = new components_layouts_Padding(attributes);
+	} else {
+		inst.__tink_init19(attributes);
+	}
+	return inst;
+};
+components_layouts_Padding.__super__ = coconut_ui_View;
+components_layouts_Padding.prototype = $extend(coconut_ui_View.prototype,{
+	render: function() {
+		var style = "padding: " + tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.padding.observe()).top + "px " + tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.padding.observe()).right + "px " + tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.padding.observe()).bottom + "px " + tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.padding.observe()).left + "px";
+		var __r = [];
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("padding flex-1"), style : vdom__$Style_Style_$Impl_$.ofString(style)};
+		var __r1 = [];
+		__r1.push(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.child.observe()));
+		__r.push(vdom_VDom.h("div",__ret,__r1));
+		return __r[0];
+	}
+	,toString: function() {
+		return "Padding" + "#" + this.viewId;
+	}
+	,__tink_init19: function(attributes) {
+		this.__slots.child.setData(attributes.child);
+		this.__slots.padding.setData(attributes.padding);
+	}
+	,get_child: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.child.observe());
+	}
+	,get_padding: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.padding.observe());
+	}
+	,__class__: components_layouts_Padding
+});
+var components_layouts_Row = function(data) {
+	this.__tink_defaults20 = { };
+	this.__slots = { childs : new coconut_ui_tools_Slot(this,null)};
+	this.__tink_init21(data);
+	coconut_ui_View.call(this,$bind(this,this.render));
+};
+components_layouts_Row.__name__ = true;
+components_layouts_Row.__init = function(attributes,inst) {
+	if(inst == null) {
+		inst = new components_layouts_Row(attributes);
+	} else {
+		inst.__tink_init21(attributes);
+	}
+	return inst;
+};
+components_layouts_Row.__super__ = coconut_ui_View;
+components_layouts_Row.prototype = $extend(coconut_ui_View.prototype,{
+	render: function() {
+		var _gthis = this;
+		var __r = [];
+		var __ret = { className : vdom__$Attr_ClassName_$Impl_$.ofString("row flex-1")};
+		var attr = __ret;
+		var __r1 = [];
+		var _g = new tink_pure_NodeIterator(tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.childs.observe()));
+		while(_g.list.length > 0) {
+			var child = _g.next();
+			__r1.push(child);
+		}
+		__r.push(vdom_VDom.h("div",attr,__r1));
+		return __r[0];
+	}
+	,toString: function() {
+		return "Row" + "#" + this.viewId;
+	}
+	,__tink_init21: function(attributes) {
+		this.__slots.childs.setData(attributes.childs);
+	}
+	,get_childs: function() {
+		return tink_state__$Observable_Observable_$Impl_$.get_value(this.__slots.childs.observe());
+	}
+	,__class__: components_layouts_Row
 });
 var haxe_StackItem = $hxEnums["haxe.StackItem"] = { __ename__ : true, __constructs__ : ["CFunction","Module","FilePos","Method","LocalFunction"]
 	,CFunction: {_hx_index:0,__enum__:"haxe.StackItem",toString:$estr}
@@ -1476,12 +1937,96 @@ js_Boot.__string_rec = function(o,s) {
 		return String(o);
 	}
 };
+js_Boot.__interfLoop = function(cc,cl) {
+	if(cc == null) {
+		return false;
+	}
+	if(cc == cl) {
+		return true;
+	}
+	var intf = cc.__interfaces__;
+	if(intf != null) {
+		var _g1 = 0;
+		var _g = intf.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var i1 = intf[i];
+			if(i1 == cl || js_Boot.__interfLoop(i1,cl)) {
+				return true;
+			}
+		}
+	}
+	return js_Boot.__interfLoop(cc.__super__,cl);
+};
+js_Boot.__instanceof = function(o,cl) {
+	if(cl == null) {
+		return false;
+	}
+	switch(cl) {
+	case Array:
+		if((o instanceof Array)) {
+			return o.__enum__ == null;
+		} else {
+			return false;
+		}
+		break;
+	case Bool:
+		return typeof(o) == "boolean";
+	case Dynamic:
+		return true;
+	case Float:
+		return typeof(o) == "number";
+	case Int:
+		if(typeof(o) == "number") {
+			return ((o | 0) === o);
+		} else {
+			return false;
+		}
+		break;
+	case String:
+		return typeof(o) == "string";
+	default:
+		if(o != null) {
+			if(typeof(cl) == "function") {
+				if((o instanceof cl)) {
+					return true;
+				}
+				if(js_Boot.__interfLoop(js_Boot.getClass(o),cl)) {
+					return true;
+				}
+			} else if(typeof(cl) == "object" && js_Boot.__isNativeObj(cl)) {
+				if((o instanceof cl)) {
+					return true;
+				}
+			}
+		} else {
+			return false;
+		}
+		if(cl == Class ? o.__name__ != null : false) {
+			return true;
+		}
+		if(cl == Enum ? o.__ename__ != null : false) {
+			return true;
+		}
+		return $hxEnums[o.__enum__] == cl;
+	}
+};
+js_Boot.__cast = function(o,t) {
+	if(js_Boot.__instanceof(o,t)) {
+		return o;
+	} else {
+		throw new js__$Boot_HaxeError("Cannot cast " + Std.string(o) + " to " + Std.string(t));
+	}
+};
 js_Boot.__nativeClassName = function(o) {
 	var name = js_Boot.__toStr.call(o).slice(8,-1);
 	if(name == "Object" || name == "Function" || name == "Math" || name == "JSON") {
 		return null;
 	}
 	return name;
+};
+js_Boot.__isNativeObj = function(o) {
+	return js_Boot.__nativeClassName(o) != null;
 };
 js_Boot.__resolveNativeClass = function(name) {
 	return $global[name];
@@ -4480,6 +5025,12 @@ String.__name__ = true;
 Array.__name__ = true;
 Date.prototype.__class__ = Date;
 Date.__name__ = ["Date"];
+var Int = { };
+var Dynamic = { };
+var Float = Number;
+var Bool = Boolean;
+var Class = { };
+var Enum = { };
 haxe_ds_ObjectMap.count = 0;
 var __map_reserved = {};
 Object.defineProperty(js__$Boot_HaxeError.prototype,"message",{ get : function() {

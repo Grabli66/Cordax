@@ -10,10 +10,36 @@ html, body {
     height: 100%;
 }
 
-.icon-button {
+.flex-0 {
+    display: flex;
+    flex: 1;
+}
+
+.flex-1 {
+    display: flex;
+    flex: 1;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+/* .icon-button {
     cursor: pointer;
-    width: 24px;
-    height: 24px;
+    padding: 6px;
+    width: 20px;
+    height: 20px;
+}
+
+.icon-button:hover {
+    border: none;
+    border-radius: 14px;
+    background: #00000033;
+
 }
 
 .scaffold {
@@ -115,3 +141,14 @@ html, body {
     color: #fff;
     margin-bottom: 8px;    
 }
+
+.circle-avatar {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.list-view-simple-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+} */

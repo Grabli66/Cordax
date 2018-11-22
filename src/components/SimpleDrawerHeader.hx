@@ -6,6 +6,7 @@ import coconut.Ui.hxx;
 /**
  * Simple header with photo, user name and email
  */
+@:less("simple-drawer-header.less")
 class SimpleDrawerHeader extends View {
     @:attribute var photo:String;
     @:attribute var name:String;

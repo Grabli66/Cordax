@@ -1,0 +1,1 @@
+cordova run --port=9991 -- --live-reload

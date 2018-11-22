@@ -6,13 +6,13 @@ import coconut.Ui.hxx;
 
 class App extends View {    
     @:attribute var title:String = "Cordax";
-    @:attribute var content:coconut.ui.View;    
+    @:attribute var content:coconut.ui.View;
 
     function render() {
         document.getElementsByTagName('title')[0].innerText = title;
-
+        
         return hxx('
-            <div class="application">
+            <div class="application flex-1">
                 ${content}
             </div>
         ');

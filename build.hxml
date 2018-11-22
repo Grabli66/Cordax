@@ -1,5 +1,6 @@
 -cp src
--js www/js/index.js
+-js www/js/cordax.js
 -lib coconut.ui
 -lib coconut.vdom
+-D lessieOutput=./www/css/cordax.css
 -main Main
