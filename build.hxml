@@ -1,0 +1,5 @@
+-cp src
+-js www/js/index.js
+-lib coconut.ui
+-lib coconut.vdom
+-main Main
