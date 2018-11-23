@@ -1,7 +1,4 @@
-package cordax.ui;
-
-import coconut.ui.View;
-import coconut.Ui.hxx;
+package cordax.ui.material;
 
 import cordax.layouts.AxisAlignSetting;
 import cordax.layouts.Row;

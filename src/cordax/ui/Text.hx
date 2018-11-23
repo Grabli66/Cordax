@@ -1,16 +1,31 @@
 package cordax.ui;
 
-import coconut.ui.View;
-import coconut.Ui.hxx;
+import cordax.ui.View;
 
+typedef TextSettings = {
+    >StyleSettings,
+    
+    var text:String;
+}
+
+/**
+ * Text view
+ */
 class Text extends View {
-    @:attribute var text:String;
+    /**
+     * Settings
+     */
+    public var textSettings:TextSettings;
 
-    function render() {
-		return hxx('
-            <div class="text">
-                ${text}
-            </div>
-        ');
-	}
+    /**
+     * Constructor
+     * @param init 
+     */
+    public function new(init:TextSettings) {
+        super({
+            name: "text",
+            css: init.css
+        });
+        textSettings = init;
+    }
 }

@@ -1,9 +1,8 @@
 package mobile;
 
-import js.Browser.*;
+import cordax.Cordax;
 import cordax.ui.App;
 import cordax.ui.Text;
-
 
 class Main {
 	/**
@@ -11,10 +10,11 @@ class Main {
 	 */
 	private function render() {
 		var app = new App({
-			content: new Text({ text: "Test text" })
+			title: "App",
+			child: new Text({text: "Test text", css: "MyText"})
 		});
 
-		document.body.appendChild(app.toElement());
+		Cordax.run(app);
 	}
 
 	/**
@@ -32,16 +32,13 @@ class Main {
 	/**
 	 * Entry point
 	 */
-	public static function main() {		
+	public static function main() {
 		var app = new Main();
 		app.start();
 	}
 }
-
-
 // class Main {
 // 	private var drawerModel:DrawerKey = new DrawerKey();
-
 // 	private function render() {
 // 		var app = new App({
 // 			title: "Cordax",
@@ -84,16 +81,12 @@ class Main {
 // 				})
 // 			})
 // 		});
-
 // 		document.body.appendChild(app.toElement());
 // 	}
-
 // 	public function new() {}
-
 // 	public function start() {
 // 		document.addEventListener("deviceready", render, false);
 // 	}
-
 // 	public static function main() {
 // 		var app = new Main();
 // 		app.start();

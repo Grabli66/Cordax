@@ -1,8 +1,5 @@
 package cordax.ui;
 
-import vdom.VNode;
-import coconut.ui.View;
-import coconut.Ui.hxx;
 
 /**
  * Adapter of items to VNode

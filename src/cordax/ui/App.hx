@@ -1,20 +1,38 @@
 package cordax.ui;
 
-import js.Browser.*;
-import coconut.ui.View;
-import coconut.Ui.hxx;
+import cordax.ui.View;
+
+typedef AppSettings = { 
+    >StyleSettings,
+    >ChildSettings,
+
+    var title:String;
+}
 
 class App extends View {    
-    @:attribute var title:String = "Cordax";
-    @:attribute var content:coconut.ui.View;
+    /**
+     * Settings of app
+     */
+    public var appSettings:AppSettings;
 
-    function render() {
-        document.getElementsByTagName('title')[0].innerText = title;
-        
-        return hxx('
-            <div class="application flex-1">
-                ${content}
-            </div>
-        ');
+    /**
+     * Constructor
+     * @param params 
+     */
+    public function new(init:AppSettings) {
+        appSettings = init;
+
+        super({
+            name: "app",
+            css: init.css
+        });
+    }
+
+    /**
+     * Render to element
+     */
+    override function render() {
+        Cordax.setTitle(appSettings.title);
+        return new Text({text: "Text"});
     }
 }
