@@ -1,0 +1,6 @@
+-cp src
+-cp test
+-js test/mobile/www/js/cordax.js
+-lib coconut.ui
+-lib coconut.vdom
+-main mobile.Main
