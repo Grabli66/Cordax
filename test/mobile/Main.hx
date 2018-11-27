@@ -11,7 +11,7 @@ class Main {
 	private function render() {
 		var app = new App({
 			title: "App",
-			child: new Text({text: "Test text", css: "MyText"})
+			content: new Text({text: "Test text"})
 		});
 
 		Cordax.run(app);

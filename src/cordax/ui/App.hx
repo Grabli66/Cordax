@@ -1,38 +1,37 @@
 package cordax.ui;
 
-import cordax.ui.View;
+import cordax.native.Element;
 
-typedef AppSettings = { 
-    >StyleSettings,
-    >ChildSettings,
-
-    var title:String;
+typedef AppSettings = {
+	var title:String;
+	var content:View;
 }
 
-class App extends View {    
+/**
+ * App component
+ */
+class App extends View {
     /**
      * Settings of app
      */
-    public var appSettings:AppSettings;
+    private var settings:AppSettings;
 
-    /**
-     * Constructor
-     * @param params 
-     */
-    public function new(init:AppSettings) {
-        appSettings = init;
-
-        super({
-            name: "app",
-            css: init.css
-        });
+	/**
+	 * Constructor
+	 */
+	public function new(settings:AppSettings) {
+        this.settings = settings;
     }
 
     /**
-     * Render to element
+     * Convert view to element
+     * @return Element
      */
-    override function render() {
-        Cordax.setTitle(appSettings.title);
-        return new Text({text: "Text"});
+    public override function toElement():Element {
+        Cordax.setTitle(settings.title);
+
+        var res = new Element("");
+        res.addChild(settings.content.toElement());
+        return res;
     }
 }

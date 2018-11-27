@@ -1,22 +1,42 @@
 package cordax;
 
+import cordax.native.IRender;
+import cordax.ui.View;
+
 #if js
 import js.Browser;
+import cordax.native.html.HtmlRender;
 #end
-import cordax.ui.View;
 
 /**
  * Helper
  */
 class Cordax {
 	/**
+	 * Render of app
+	 */
+	private static var render:IRender;
+
+	/**
+	 * Document of elements
+	 */
+	public static var document:Document;
+
+	/**
 	 * Run application with root view
 	 * @param view
 	 */
 	public static function run(view:View) {
+		var document = new Document();
 		#if js
-		Browser.document.appendChild(view.toElement().toNative());
+		render = new HtmlRender();
 		#end
+
+		document.onChange = () -> {
+			render.render(document);
+		};
+
+		document.root = view;
 	}
 
 	/**
@@ -24,6 +44,8 @@ class Cordax {
 	 * @param title
 	 */
 	public static function setTitle(title:String) {
+		#if js
 		Browser.document.getElementsByTagName('title')[0].innerText = title;
+		#end
 	}
 }

@@ -7,63 +7,125 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
+var HxOverrides = function() { };
+HxOverrides.iter = function(a) {
+	return { cur : 0, arr : a, hasNext : function() {
+		return this.cur < this.arr.length;
+	}, next : function() {
+		return this.arr[this.cur++];
+	}};
+};
 var cordax_Cordax = function() { };
 cordax_Cordax.run = function(view) {
+	var document = new cordax_Document();
+	cordax_Cordax.render = new cordax_native_html_HtmlRender();
+	document.onChange = function() {
+		cordax_Cordax.render.render(document);
+		return;
+	};
+	document.set_root(view);
 };
-var cordax_ui_View = function() {
+cordax_Cordax.setTitle = function(title) {
+	window.document.getElementsByTagName("title")[0].innerText = title;
 };
+var cordax_Document = function() {
+	this.set_isDirty(false);
+};
+cordax_Document.prototype = {
+	get_root: function() {
+		return this.rootView;
+	}
+	,set_root: function(value) {
+		this.rootView = value;
+		this.set_isDirty(true);
+		return value;
+	}
+	,get_isDirty: function() {
+		return this.isDirtyInternal;
+	}
+	,set_isDirty: function(value) {
+		this.isDirtyInternal = value;
+		if(this.onChange != null) {
+			this.onChange();
+		}
+		this.isDirtyInternal = false;
+		return this.isDirtyInternal;
+	}
+};
+var cordax_native_Element = function(name) {
+	this.name = name;
+	this.childArray = [];
+};
+cordax_native_Element.prototype = {
+	get_childs: function() {
+		return HxOverrides.iter(this.childArray);
+	}
+	,addChild: function(child) {
+		this.childArray.push(child);
+	}
+};
+var cordax_native_IRender = function() { };
+var cordax_native_html_HtmlRender = function() {
+};
+cordax_native_html_HtmlRender.__interfaces__ = [cordax_native_IRender];
+cordax_native_html_HtmlRender.prototype = {
+	createHtmlElement: function(element) {
+		var res = window.document.createElement("div");
+		if(element.text != null) {
+			res.innerText = element.text;
+		}
+		return res;
+	}
+	,render: function(document) {
+		console.log("src/cordax/native/html/HtmlRender.hx:29:","RENDER");
+		var element = document.get_root().toElement();
+		window.document.body.innerHTML = "";
+		var root = this.createHtmlElement(element);
+		var child = element.get_childs();
+		while(child.hasNext()) {
+			var child1 = child.next();
+			var childDiv = this.createHtmlElement(child1);
+			root.appendChild(childDiv);
+		}
+		window.document.body.appendChild(root);
+	}
+};
+var cordax_ui_View = function() { };
 cordax_ui_View.prototype = {
 	render: function() {
-		throw new js__$Boot_HaxeError("Not implemented");
+		return null;
 	}
-};
-var cordax_ui_App = function(params) {
-	this.title = "Cordax";
-	cordax_ui_View.call(this);
-};
-cordax_ui_App.__super__ = cordax_ui_View;
-cordax_ui_App.prototype = $extend(cordax_ui_View.prototype,{
-	render: function() {
-		window.document.getElementsByTagName("title")[0].innerText = this.title;
-		return new cordax_ui_NativeElement({ name : "app"});
-	}
-});
-var cordax_ui_NativeElement = function(params) {
-	this.params = params;
-};
-cordax_ui_NativeElement.prototype = {
-	render: function() {
-		var res = window.document.createElement(this.params.name);
+	,toElement: function() {
+		var res = new cordax_native_Element("");
+		var childView = this.render();
+		if(childView != null) {
+			res.addChild(childView.toElement());
+		}
 		return res;
 	}
 };
-var cordax_ui_Text = function(init) {
-	cordax_ui_View.call(this);
-	this.settings = init;
+var cordax_ui_App = function(settings) {
+	this.settings = settings;
+};
+cordax_ui_App.__super__ = cordax_ui_View;
+cordax_ui_App.prototype = $extend(cordax_ui_View.prototype,{
+	toElement: function() {
+		cordax_Cordax.setTitle(this.settings.title);
+		var res = new cordax_native_Element("");
+		res.addChild(this.settings.content.toElement());
+		return res;
+	}
+});
+var cordax_ui_Text = function(settings) {
+	this.settings = settings;
 };
 cordax_ui_Text.__super__ = cordax_ui_View;
 cordax_ui_Text.prototype = $extend(cordax_ui_View.prototype,{
-	render: function() {
-		var element = cordax_ui_View.prototype.render.call(this);
-		return element;
+	toElement: function() {
+		var res = new cordax_native_Element("");
+		res.text = this.settings.text;
+		return res;
 	}
-});
-var js__$Boot_HaxeError = function(val) {
-	Error.call(this);
-	this.val = val;
-	if(Error.captureStackTrace) {
-		Error.captureStackTrace(this,js__$Boot_HaxeError);
-	}
-};
-js__$Boot_HaxeError.wrap = function(val) {
-	if((val instanceof Error)) {
-		return val;
-	} else {
-		return new js__$Boot_HaxeError(val);
-	}
-};
-js__$Boot_HaxeError.__super__ = Error;
-js__$Boot_HaxeError.prototype = $extend(Error.prototype,{
 });
 var mobile_Main = function() {
 };
@@ -73,15 +135,12 @@ mobile_Main.main = function() {
 };
 mobile_Main.prototype = {
 	render: function() {
-		var app = new cordax_ui_App({ content : new cordax_ui_Text({ text : "Test text", css : "MyText"})});
+		var app = new cordax_ui_App({ title : "App", content : new cordax_ui_Text({ text : "Test text"})});
 		cordax_Cordax.run(app);
 	}
 	,start: function() {
 		this.render();
 	}
 };
-Object.defineProperty(js__$Boot_HaxeError.prototype,"message",{ get : function() {
-	return String(this.val);
-}});
 mobile_Main.main();
 })();

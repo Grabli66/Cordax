@@ -1,51 +1,28 @@
 package cordax.ui;
 
-typedef StyleSettings = {
-    @:optional var css:String;
-}
-
-typedef ChildSettings = {
-    @:optional var child:View;
-}
-
-typedef ViewSettings = { >StyleSettings,
-    var name:String;
-    @:optional var childs:Array<View>;
-}
+import cordax.Cordax;
+import cordax.native.Element;
 
 /**
- * Base view
+ * Base class of all view components
  */
 class View {
     /**
-     * View settings
+     * Render view layout from other views (childs)
      */
-    public var settings:ViewSettings;
-
-    /**
-     * Constructor
-     */
-    public function new(init:ViewSettings) {
-        settings = init;
+    public function render():View {
+        return null;
     }
 
     /**
-     * Render view to native element
+     * Convert view to element
+     * @return Element
      */
-    function render():View {
-        throw "Not implemented";
-    }
-
-    /**
-     * Make element for view     
-     */
-    public function toElement():NativeElement {
-        var renderedView = render();
-        var renderedElement = renderedView.toElement();        
-
-        return new NativeElement({
-            name: settings.name,
-            childs: []
-        });
+    public function toElement():Element {
+        var res = new Element("");
+        var childView = render();
+        if (childView != null)
+            res.addChild(childView.toElement());
+        return res;
     }
 }
