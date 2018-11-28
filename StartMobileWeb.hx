@@ -8,6 +8,6 @@ import hxp.Script;
 class StartMobileWeb extends Script {    
     public function new () {
         super();        
-        PlatformTools.launchWebServer("test/mobile/www", 9091, true);
+        PlatformTools.launchWebServer("test/mobile_web/www", 9091, true);
     }
 }

@@ -1,4 +1,4 @@
-package mobile;
+package mobile_web;
 
 import cordax.Cordax;
 import cordax.ui.App;
