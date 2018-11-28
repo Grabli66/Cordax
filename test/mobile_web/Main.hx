@@ -2,19 +2,38 @@ package mobile_web;
 
 import cordax.Cordax;
 import cordax.ui.App;
+import cordax.ui.View;
 import cordax.ui.Text;
+import cordax.ui.Button;
+
+class MyApp extends View {
+	var caption:String;
+
+	public function new() {
+		super();
+		caption = "Click!!!";
+	}
+
+	/**
+	 * Render view layout from other views (childs)
+	 */
+	public override function render():View {
+		return new App({
+			title: "App",
+			content: new Button({text: caption, onClick: () -> {
+				caption = "Good!";
+				setState();
+			}})
+		});
+	}
+}
 
 class Main {
 	/**
 	 * Render app
 	 */
 	private function render() {
-		var app = new App({
-			title: "App",
-			content: new Text({text: "Test text"})
-		});
-
-		Cordax.run(app);
+		Cordax.run(new MyApp());
 	}
 
 	/**
@@ -37,6 +56,7 @@ class Main {
 		app.start();
 	}
 }
+
 // class Main {
 // 	private var drawerModel:DrawerKey = new DrawerKey();
 // 	private function render() {

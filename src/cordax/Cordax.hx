@@ -27,7 +27,7 @@ class Cordax {
 	 * @param view
 	 */
 	public static function run(view:View) {
-		var document = new Document();
+		document = new Document();
 		#if js
 		render = new HtmlRender();
 		#end

@@ -20,6 +20,7 @@ class Text extends View {
      * @param init 
      */
     public function new(settings:TextSettings) {
+        super();
         this.settings = settings;
     }
 
@@ -28,7 +29,7 @@ class Text extends View {
      * @return Element
      */
     public override function toElement():Element {
-        var res = new Element("");
+        var res = new Element(name);
         res.text = settings.text;
         return res;
     }

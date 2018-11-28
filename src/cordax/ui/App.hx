@@ -20,6 +20,7 @@ class App extends View {
 	 * Constructor
 	 */
 	public function new(settings:AppSettings) {
+        super();
         this.settings = settings;
     }
 
@@ -30,7 +31,7 @@ class App extends View {
     public override function toElement():Element {
         Cordax.setTitle(settings.title);
 
-        var res = new Element("");
+        var res = new Element(name);
         res.addChild(settings.content.toElement());
         return res;
     }

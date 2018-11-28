@@ -24,6 +24,11 @@ class Element {
     public var text:String;
 
     /**
+     * On click callback
+     */
+    public var onClick:() -> Void;
+
+    /**
      * Return childs iterator
      */
     public var childs(get, never):Iterator<Element>;
@@ -34,9 +39,9 @@ class Element {
     /**
      * Constructor
      */
-    public function new(name:String) {
-        this.name = name;
+    public function new(name:String) {        
         childArray = new Array<Element>();
+        this.name = name;
     }
 
     /**
