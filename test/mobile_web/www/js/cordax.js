@@ -66,6 +66,51 @@ cordax_Document.prototype = {
 	}
 	,__class__: cordax_Document
 };
+var cordax_ui_View = function() {
+};
+cordax_ui_View.__name__ = ["cordax","ui","View"];
+cordax_ui_View.prototype = {
+	get_name: function() {
+		var fullName = Type.getClassName(js_Boot.getClass(this));
+		var items = fullName.split(".");
+		return items[items.length - 1];
+	}
+	,setState: function() {
+		cordax_Cordax.document.set_isDirty(true);
+	}
+	,render: function() {
+		return null;
+	}
+	,toElement: function() {
+		var res = new cordax_native_Element(this.get_name());
+		var childView = this.render();
+		if(childView != null) {
+			res.addChild(childView.toElement());
+		}
+		return res;
+	}
+	,__class__: cordax_ui_View
+};
+var cordax_layouts_Column = function(settings) {
+	cordax_ui_View.call(this);
+	this.settings = settings;
+};
+cordax_layouts_Column.__name__ = ["cordax","layouts","Column"];
+cordax_layouts_Column.__super__ = cordax_ui_View;
+cordax_layouts_Column.prototype = $extend(cordax_ui_View.prototype,{
+	toElement: function() {
+		var res = new cordax_native_Element(this.get_name());
+		var _g = 0;
+		var _g1 = this.settings.childs;
+		while(_g < _g1.length) {
+			var child = _g1[_g];
+			++_g;
+			res.addChild(child.toElement());
+		}
+		return res;
+	}
+	,__class__: cordax_layouts_Column
+});
 var cordax_native_Element = function(name) {
 	this.childArray = [];
 	this.name = name;
@@ -119,31 +164,6 @@ cordax_native_html_HtmlRender.prototype = {
 		window.document.body.appendChild(root);
 	}
 	,__class__: cordax_native_html_HtmlRender
-};
-var cordax_ui_View = function() {
-};
-cordax_ui_View.__name__ = ["cordax","ui","View"];
-cordax_ui_View.prototype = {
-	get_name: function() {
-		var fullName = Type.getClassName(js_Boot.getClass(this));
-		var items = fullName.split(".");
-		return items[items.length - 1];
-	}
-	,setState: function() {
-		cordax_Cordax.document.set_isDirty(true);
-	}
-	,render: function() {
-		return null;
-	}
-	,toElement: function() {
-		var res = new cordax_native_Element(this.get_name());
-		var childView = this.render();
-		if(childView != null) {
-			res.addChild(childView.toElement());
-		}
-		return res;
-	}
-	,__class__: cordax_ui_View
 };
 var cordax_ui_App = function(settings) {
 	cordax_ui_View.call(this);
@@ -218,18 +238,19 @@ js_Boot.__resolveNativeClass = function(name) {
 };
 var mobile_$web_MyApp = function() {
 	cordax_ui_View.call(this);
-	this.caption = "Click!!!";
+	this.count = 1;
 };
 mobile_$web_MyApp.__name__ = ["mobile_web","MyApp"];
 mobile_$web_MyApp.__super__ = cordax_ui_View;
 mobile_$web_MyApp.prototype = $extend(cordax_ui_View.prototype,{
 	render: function() {
 		var _gthis = this;
-		return new cordax_ui_App({ title : "App", content : new cordax_ui_Button({ text : this.caption, onClick : function() {
-			_gthis.caption = "Good!";
+		this.caption = "Clicked: " + this.count;
+		return new cordax_ui_App({ title : "App", content : new cordax_layouts_Column({ childs : [new cordax_ui_Text({ text : this.caption}),new cordax_ui_Button({ text : "Click me!", onClick : function() {
+			_gthis.count += 1;
 			_gthis.setState();
 			return;
-		}})});
+		}})]})});
 	}
 	,__class__: mobile_$web_MyApp
 });

@@ -1,6 +1,7 @@
 package mobile_web;
 
 import cordax.Cordax;
+import cordax.layouts.Column;
 import cordax.ui.App;
 import cordax.ui.View;
 import cordax.ui.Text;
@@ -8,22 +9,33 @@ import cordax.ui.Button;
 
 class MyApp extends View {
 	var caption:String;
+	var count:Int;
 
 	public function new() {
 		super();
-		caption = "Click!!!";
+		count = 1;		
 	}
 
 	/**
 	 * Render view layout from other views (childs)
 	 */
 	public override function render():View {
+		caption = 'Clicked: ${count}';
+
 		return new App({
 			title: "App",
-			content: new Button({text: caption, onClick: () -> {
-				caption = "Good!";
-				setState();
-			}})
+			content: new Column({
+				childs: [
+					new Text({text: caption}),
+					new Button({
+						text: "Click me!",
+						onClick: () -> {
+							count += 1;
+							setState();
+						}
+					})
+				]
+			})
 		});
 	}
 }
