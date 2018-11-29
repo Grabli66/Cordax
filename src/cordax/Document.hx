@@ -37,7 +37,7 @@ class Document {
 	private function set_isDirty(value:Bool):Bool {
 		isDirtyInternal = value;
 		if (onChange != null)
-			onChange();
+			onChange(null);
 		isDirtyInternal = false;
 		return isDirtyInternal;
 	}
@@ -45,12 +45,22 @@ class Document {
 	/**
 	 * Notify document was changed
 	 */
-	public var onChange:() -> Void;
+	public var onChange:(View) -> Void;
 
 	/**
 	 * Constructor
 	 */
 	public function new() {
 		isDirty = false;
+	}
+
+	/**
+	 * Notify view change
+	 */
+	public function notifyChange(view:View) {
+		isDirtyInternal = true;
+		if (onChange != null)
+			onChange(view);
+		isDirtyInternal = false;
 	}
 }

@@ -17,6 +17,23 @@ HxOverrides.iter = function(a) {
 	}};
 };
 Math.__name__ = ["Math"];
+var StringTools = function() { };
+StringTools.__name__ = ["StringTools"];
+StringTools.hex = function(n,digits) {
+	var s = "";
+	var hexChars = "0123456789ABCDEF";
+	while(true) {
+		s = hexChars.charAt(n & 15) + s;
+		n >>>= 4;
+		if(!(n > 0)) {
+			break;
+		}
+	}
+	if(digits != null) {
+		while(s.length < digits) s = "0" + s;
+	}
+	return s;
+};
 var Type = function() { };
 Type.__name__ = ["Type"];
 Type.getClassName = function(c) {
@@ -31,8 +48,8 @@ cordax_Cordax.__name__ = ["cordax","Cordax"];
 cordax_Cordax.run = function(view) {
 	cordax_Cordax.document = new cordax_Document();
 	cordax_Cordax.render = new cordax_native_html_HtmlRender();
-	cordax_Cordax.document.onChange = function() {
-		cordax_Cordax.render.render(cordax_Cordax.document);
+	cordax_Cordax.document.onChange = function(changedView) {
+		cordax_Cordax.render.render(cordax_Cordax.document,changedView);
 		return;
 	};
 	cordax_Cordax.document.set_root(view);
@@ -59,14 +76,23 @@ cordax_Document.prototype = {
 	,set_isDirty: function(value) {
 		this.isDirtyInternal = value;
 		if(this.onChange != null) {
-			this.onChange();
+			this.onChange(null);
 		}
 		this.isDirtyInternal = false;
 		return this.isDirtyInternal;
 	}
+	,notifyChange: function(view) {
+		this.isDirtyInternal = true;
+		if(this.onChange != null) {
+			this.onChange(view);
+		}
+		this.isDirtyInternal = false;
+	}
 	,__class__: cordax_Document
 };
 var cordax_ui_View = function() {
+	this.id = cordax_ui_Guid.generate();
+	console.log("src/cordax/ui/View.hx:37:",this.id);
 };
 cordax_ui_View.__name__ = ["cordax","ui","View"];
 cordax_ui_View.prototype = {
@@ -155,13 +181,15 @@ cordax_native_html_HtmlRender.prototype = {
 			root.appendChild(childDiv);
 		}
 	}
-	,render: function(document) {
-		console.log("src/cordax/native/html/HtmlRender.hx:42:","RENDER");
-		var element = document.get_root().toElement();
-		window.document.body.innerHTML = "";
-		var root = this.createHtmlElement(element);
-		this.renderChildsRecursive(root,element);
-		window.document.body.appendChild(root);
+	,render: function(document,view) {
+		console.log("src/cordax/native/html/HtmlRender.hx:44:","RENDER");
+		if(view == null) {
+			var element = document.get_root().toElement();
+			window.document.body.innerHTML = "";
+			var root = this.createHtmlElement(element);
+			this.renderChildsRecursive(root,element);
+			window.document.body.appendChild(root);
+		}
 	}
 	,__class__: cordax_native_html_HtmlRender
 };
@@ -209,6 +237,20 @@ cordax_ui_Text.prototype = $extend(cordax_ui_View.prototype,{
 	}
 	,__class__: cordax_ui_Text
 });
+var cordax_ui_Guid = function() { };
+cordax_ui_Guid.__name__ = ["cordax","ui","Guid"];
+cordax_ui_Guid.generate = function() {
+	var result = "";
+	var _g = 0;
+	while(_g < 32) {
+		var j = _g++;
+		if(j == 8 || j == 12 || j == 16 || j == 20) {
+			result += "-";
+		}
+		result += StringTools.hex(Math.floor(Math.random() * 16));
+	}
+	return result.toUpperCase();
+};
 var js_Boot = function() { };
 js_Boot.__name__ = ["js","Boot"];
 js_Boot.getClass = function(o) {

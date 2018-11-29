@@ -32,8 +32,8 @@ class Cordax {
 		render = new HtmlRender();
 		#end
 
-		document.onChange = () -> {
-			render.render(document);
+		document.onChange = (changedView) -> {
+			render.render(document, changedView);
 		};
 
 		document.root = view;

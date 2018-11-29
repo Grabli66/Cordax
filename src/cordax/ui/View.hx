@@ -1,16 +1,40 @@
 package cordax.ui;
 
+import haxe.crypto.Md5;
 import cordax.Cordax;
 import cordax.native.Element;
+
+class Guid {
+	public static function generate():String {
+		var result = "";
+
+		for (j in 0...32) {
+			if (j == 8 || j == 12 || j == 16 || j == 20) {
+				result += "-";
+			}
+
+			result += StringTools.hex(Math.floor(Math.random() * 16));
+		}
+
+		return result.toUpperCase();
+	}
+}
 
 /**
  * Base class of all view components
  */
 class View {
 	/**
+	 * Id of view
+	 */
+	public final id:String;
+
+	/**
 	 * Constructor
 	 */
-	public function new() {}
+	public function new() {
+		id = Guid.generate();
+	}
 
 	/**
 	 * Name of view
@@ -27,8 +51,8 @@ class View {
 	 * Set state and rerender
 	 */
 	public function setState() {
-        Cordax.document.isDirty = true;
-    }
+		Cordax.document.isDirty = true;
+	}
 
 	/**
 	 * Render view layout from other views (childs)
