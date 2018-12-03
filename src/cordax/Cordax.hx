@@ -27,7 +27,7 @@ class Cordax {
 		render = new HtmlRender();
 		#end
 
-		var root = new Element("root");
+		var root = new Element("application");
 		view.mount(root);
 		render.render(root);
 	}

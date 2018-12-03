@@ -4,6 +4,7 @@ import cordax.native.Element;
 
 typedef AppSettings = {
 	var title:String;
+    @:optional var appBar:View;
 	var content:View;
 }
 
@@ -31,6 +32,9 @@ class App extends View {
         Cordax.setTitle(settings.title);
 
         var res = new Element(name);
+        if (settings.appBar != null)
+            settings.appBar.mount(res);
+
         settings.content.mount(res);
         parent.addChild(res);
     }

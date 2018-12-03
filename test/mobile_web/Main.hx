@@ -5,6 +5,7 @@ import cordax.layouts.Column;
 import cordax.ui.App;
 import cordax.ui.View;
 import cordax.ui.Text;
+import cordax.ui.AppBar;
 import cordax.ui.Button;
 
 class MyApp extends View {
@@ -25,6 +26,7 @@ class MyApp extends View {
 		caption = 'Clicked: ${count}';
 		return new App({
 			title: "App",
+			appBar: new AppBar(),
 			content: new Column({
 				childs: [
 					new Text({model: textModel, text: caption}),

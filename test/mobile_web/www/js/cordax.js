@@ -47,7 +47,7 @@ var cordax_Cordax = function() { };
 cordax_Cordax.__name__ = ["cordax","Cordax"];
 cordax_Cordax.run = function(view) {
 	cordax_Cordax.render = new cordax_native_html_HtmlRender();
-	var root = new cordax_native_Element("root");
+	var root = new cordax_native_Element("application");
 	view.mount(root);
 	cordax_Cordax.render.render(root);
 };
@@ -177,10 +177,25 @@ cordax_ui_App.prototype = $extend(cordax_ui_View.prototype,{
 	mount: function(parent) {
 		cordax_Cordax.setTitle(this.settings.title);
 		var res = new cordax_native_Element(this.get_name());
+		if(this.settings.appBar != null) {
+			this.settings.appBar.mount(res);
+		}
 		this.settings.content.mount(res);
 		parent.addChild(res);
 	}
 	,__class__: cordax_ui_App
+});
+var cordax_ui_AppBar = function() {
+	cordax_ui_View.call(this);
+};
+cordax_ui_AppBar.__name__ = ["cordax","ui","AppBar"];
+cordax_ui_AppBar.__super__ = cordax_ui_View;
+cordax_ui_AppBar.prototype = $extend(cordax_ui_View.prototype,{
+	mount: function(parent) {
+		var res = new cordax_native_Element(this.get_name());
+		parent.addChild(res);
+	}
+	,__class__: cordax_ui_AppBar
 });
 var cordax_ui_Button = function(settings) {
 	cordax_ui_View.call(this);
@@ -247,7 +262,7 @@ var cordax_ui_Text = function(settings) {
 				var changeKey1 = changeKey.next();
 				var value = __map_reserved[changeKey1] != null ? changed.getReserved(changeKey1) : changed.h[changeKey1];
 				if(changeKey1 == "text") {
-					_gthis.textElement.text = _gthis.settings.model.text;
+					_gthis.textElement.text = value;
 				}
 			}
 			_gthis.textElement.update();
@@ -359,7 +374,7 @@ mobile_$web_MyApp.prototype = $extend(cordax_ui_View.prototype,{
 	render: function() {
 		var _gthis = this;
 		this.caption = "Clicked: " + this.count;
-		return new cordax_ui_App({ title : "App", content : new cordax_layouts_Column({ childs : [new cordax_ui_Text({ model : this.textModel, text : this.caption}),new cordax_ui_Button({ text : "Click me!", onClick : function() {
+		return new cordax_ui_App({ title : "App", appBar : new cordax_ui_AppBar(), content : new cordax_layouts_Column({ childs : [new cordax_ui_Text({ model : this.textModel, text : this.caption}),new cordax_ui_Button({ text : "Click me!", onClick : function() {
 			_gthis.count += 1;
 			_gthis.textModel.set_text("Clicked: " + _gthis.count);
 			_gthis.textModel.apply();

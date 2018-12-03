@@ -58,7 +58,7 @@ class Text extends View {
                     var value = changed[changeKey];
                     switch (changeKey) {
                         case "text":
-                            textElement.text = this.settings.model.text;
+                            textElement.text = value;
                     }
                 }
 

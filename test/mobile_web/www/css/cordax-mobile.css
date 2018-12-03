@@ -41,7 +41,7 @@ html, body {
     display: flex;
 }
 
-.app-bar {
+.appbar {
     background-color: #1B5E20;
     display: flex;
     flex-direction: row;
