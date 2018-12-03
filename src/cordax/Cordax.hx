@@ -1,5 +1,6 @@
 package cordax;
 
+import cordax.native.Element;
 import cordax.native.IRender;
 import cordax.ui.View;
 
@@ -18,25 +19,17 @@ class Cordax {
 	private static var render:IRender;
 
 	/**
-	 * Document of elements
-	 */
-	public static var document:Document;
-
-	/**
 	 * Run application with root view
 	 * @param view
 	 */
 	public static function run(view:View) {
-		document = new Document();
 		#if js
 		render = new HtmlRender();
 		#end
 
-		document.onChange = (changedView) -> {
-			render.render(document, changedView);
-		};
-
-		document.root = view;
+		var root = new Element("root");
+		view.mount(root);
+		render.render(root);
 	}
 
 	/**

@@ -21,6 +21,46 @@ class Guid {
 }
 
 /**
+ * Model of view
+ */
+class ViewModel {
+	/**
+	 * Changed parameters
+	 */
+	private final changed = new Map<String, Dynamic>();
+
+	/**
+	 * Is dirty
+	 */
+	private var isDirty:Bool;
+
+	/**
+	 * Calls on change
+	 */
+	public var onChange:(Map<String, Dynamic>) -> Void;
+
+	/**
+	 * Notify about changes
+	 * @param name 
+	 * @param value 
+	 */
+	private function notify(name:String, value:Dynamic) {
+		changed[name] = value;
+		isDirty = true;
+	}
+
+	/**
+	 * Notify about change
+	 */
+	public function apply() {
+		if ((onChange != null) && (isDirty)) {
+			onChange(changed);
+			isDirty = false;
+		}
+	}
+}
+
+/**
  * Base class of all view components
  */
 class View {
@@ -48,13 +88,6 @@ class View {
 	}
 
 	/**
-	 * Set state and rerender
-	 */
-	public function setState() {
-		Cordax.document.isDirty = true;
-	}
-
-	/**
 	 * Render view layout from other views (childs)
 	 */
 	public function render():View {
@@ -62,14 +95,13 @@ class View {
 	}
 
 	/**
-	 * Convert view to element
-	 * @return Element
+	 * Convert view to element and mount to parent
 	 */
-	public function toElement():Element {
+	public function mount(parent:Element):Void {
 		var res = new Element(name);
 		var childView = render();
 		if (childView != null)
-			res.addChild(childView.toElement());
-		return res;
+			childView.mount(res);
+		parent.addChild(res);
 	}
 }

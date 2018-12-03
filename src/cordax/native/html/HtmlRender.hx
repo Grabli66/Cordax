@@ -7,24 +7,19 @@ import js.Browser;
  * View to native element
  */
 class ViewPair {
-    public final view:View;
-    public final element:js.html.Element;
+	public final view:View;
+	public final element:js.html.Element;
 
-    public function new(view:View, element:js.html.Element) {
-        this.view = view;
-        this.element = element;
-    }
+	public function new(view:View, element:js.html.Element) {
+		this.view = view;
+		this.element = element;
+	}
 }
 
 /**
  * Render document to html
  */
 class HtmlRender implements IRender {
-    /**
-     * Views to native elements
-     */
-    var views = new Map<String, ViewPair>();
-
 	/**
 	 * Constructor
 	 */
@@ -37,6 +32,8 @@ class HtmlRender implements IRender {
 	 */
 	private function createHtmlElement(element:cordax.native.Element):js.html.Element {
 		var res = Browser.document.createDivElement();
+		element.render = this;
+		element.nativeElement = res;
 		res.className = element.name.toLowerCase();
 		if (element.text != null)
 			res.innerText = element.text;
@@ -58,18 +55,23 @@ class HtmlRender implements IRender {
 	/**
 	 * Render document to native
 	 */
-	public function render(document:Document, view:View = null) {
+	public function render(root:Element) {
 		trace("RENDER");
-		if (view == null) {			
-			Browser.document.body.innerHTML = "";
 
-            var element = document.root.toElement();
-			var root = createHtmlElement(element);
+		Browser.document.body.innerHTML = "";
+		
+		var rootElement = createHtmlElement(root);				
+		renderChildsRecursive(rootElement, root);
 
-            views[document.root.id] = new ViewPair(document.root, root);
-			renderChildsRecursive(root, element);
+		Browser.document.body.appendChild(rootElement);
+	}
 
-			Browser.document.body.appendChild(root);
-		}
+	/**
+	 * Update element
+	 * @param element 
+	 */
+	public function update(element:Element) {		
+		var htmlElement:js.html.Element = cast element.nativeElement;
+		htmlElement.innerText = element.text;
 	}
 }

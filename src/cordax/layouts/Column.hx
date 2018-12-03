@@ -24,14 +24,13 @@ class Column extends View {
     }
 
     /**
-     * Convert view to element
-     * @return Element
-     */
-    public override function toElement():Element {
+	 * Convert view to element and mount to parent
+	 */
+	public override function mount(parent:Element):Void {
         var res = new Element(name);
         for (child in settings.childs) {
-            res.addChild(child.toElement());
+            child.mount(res);
         }
-        return res;
+        parent.addChild(res);
     }
 }

@@ -26,13 +26,12 @@ class Button extends View {
     }
 
     /**
-     * Convert view to element
-     * @return Element
-     */
-    public override function toElement():Element {
+	 * Convert view to element and mount to parent
+	 */
+	public override function mount(parent:Element):Void {
         var res = new Element(name);
         res.text = settings.text;
         res.onClick = settings.onClick;
-        return res;
+        parent.addChild(res);
     }
 }

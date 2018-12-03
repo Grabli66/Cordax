@@ -10,10 +10,12 @@ import cordax.ui.Button;
 class MyApp extends View {
 	var caption:String;
 	var count:Int;
+	var textModel:TextModel;
 
 	public function new() {
 		super();
-		count = 1;		
+		count = 1;
+		textModel = new TextModel();
 	}
 
 	/**
@@ -21,17 +23,17 @@ class MyApp extends View {
 	 */
 	public override function render():View {
 		caption = 'Clicked: ${count}';
-
 		return new App({
 			title: "App",
 			content: new Column({
 				childs: [
-					new Text({text: caption}),
+					new Text({model: textModel, text: caption}),
 					new Button({
 						text: "Click me!",
 						onClick: () -> {
 							count += 1;
-							setState();
+							textModel.text = 'Clicked: ${count}';
+							textModel.apply();
 						}
 					})
 				]

@@ -9,5 +9,10 @@ interface IRender {
     /**
      * Render document to native
      */
-    function render(document:Document, view:View = null):Void;
+    function render(root:Element):Void;
+
+    /**
+     * Update element
+     */
+    function update(element:Element):Void;
 }

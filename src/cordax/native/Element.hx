@@ -7,11 +7,22 @@ package cordax.native;
 /**
  * Native element that will be rendered
  */
+@:allow(cordax.native.IRender)
 class Element {
     /**
      * Child elements
      */
     private var childArray:Array<Element>;
+
+    /**
+     * Native element
+     */
+    private var nativeElement:Dynamic;
+
+    /**
+     * Render to update element
+     */
+    private var render:IRender;
 
     /**
      * Element name
@@ -50,5 +61,12 @@ class Element {
      */
     public function addChild(child:Element) {
         childArray.push(child);
+    }
+
+    /**
+     * Update native element
+     */
+    public function update() {
+        render.update(this);
     }
 }
