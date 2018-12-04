@@ -5,10 +5,11 @@ import cordax.layouts.Column;
 import cordax.ui.App;
 import cordax.ui.View;
 import cordax.ui.Text;
+import cordax.ui.Scaffold;
 import cordax.ui.AppBar;
 import cordax.ui.Button;
 
-class MyApp extends View {
+class MyApp extends App {
 	var caption:String;
 	var count:Int;
 	var textModel:TextModel;
@@ -24,7 +25,7 @@ class MyApp extends View {
 	 */
 	public override function render():View {
 		caption = 'Clicked: ${count}';
-		return new App({
+		return new Scaffold({
 			title: "App",
 			appBar: new AppBar(),
 			content: new Column({
@@ -34,8 +35,10 @@ class MyApp extends View {
 						text: "Click me!",
 						onClick: () -> {
 							count += 1;
-							textModel.text = 'Clicked: ${count}';
-							textModel.apply();
+							caption = 'Clicked: ${count}';
+							//textModel.text = 'Clicked: ${count}';
+							//textModel.apply();
+							setState();
 						}
 					})
 				]

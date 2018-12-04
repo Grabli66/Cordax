@@ -41,7 +41,6 @@ class Cordax {
 		#end		
 		
 		var root = view.toElement();
-
 		render.render(root);
 	}
 
@@ -50,8 +49,9 @@ class Cordax {
 	 * @param view 
 	 */
 	public static function partialRender(view:View) {
-		var element = views.get(view.id);
-		//element.parent.replaceElement(element);
+		var oldElement = views.get(view.id);
+		var newElement = view.toElement();
+		render.replace(oldElement, newElement);
 	}
 
 	/**

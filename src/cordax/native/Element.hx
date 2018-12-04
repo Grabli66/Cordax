@@ -31,6 +31,11 @@ class Element {
     public final name:String;
 
     /**
+     * Css classes
+     */
+    public final css = new Array<String>();
+
+    /**
      * Inner text
      */
     public var text:String;

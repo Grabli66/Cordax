@@ -15,4 +15,9 @@ interface IRender {
      * Update element
      */
     function update(element:Element):Void;
+
+    /**
+     * Replace element by new one
+     */
+    function replace(oldElement:Element, newElement:Element):Void;
 }

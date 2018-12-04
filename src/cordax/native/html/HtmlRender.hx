@@ -26,24 +26,42 @@ class HtmlRender implements IRender {
 	public function new() {}
 
 	/**
+	 * Apply element settings to html element
+	 * @param element 
+	 * @param htmlElement 
+	 */
+	private function applyToHtmlElement(element:Element, htmlElement:js.html.Element) {
+		var elementName = element.name.toLowerCase();
+		htmlElement.classList.add(elementName);
+		for (css in element.css) {
+			htmlElement.classList.add(css);
+		}
+
+		if (element.text != null)
+			htmlElement.innerText = element.text;
+
+		if (element.onClick != null)
+			htmlElement.onclick = element.onClick;
+	}
+
+	/**
 	 * Create new html element
 	 * @param element
 	 * @return js.html.Element
 	 */
 	private function createHtmlElement(element:cordax.native.Element):js.html.Element {
-		var res = Browser.document.createDivElement();
+		var htmlElement = Browser.document.createDivElement();
 		element.render = this;
-		element.nativeElement = res;
-		res.className = element.name.toLowerCase();
-		if (element.text != null)
-			res.innerText = element.text;
-
-		if (element.onClick != null)
-			res.onclick = element.onClick;
-
-		return res;
+		element.nativeElement = htmlElement;
+		applyToHtmlElement(element, htmlElement);
+		return htmlElement;
 	}
 
+	/**
+	 * Render childs recursively
+	 * @param root 
+	 * @param element 
+	 */
 	private function renderChildsRecursive(root:js.html.Element, element:cordax.native.Element) {
 		for (child in element.childs) {
 			var childDiv = createHtmlElement(child);
@@ -60,7 +78,7 @@ class HtmlRender implements IRender {
 
 		Browser.document.body.innerHTML = "";
 		
-		var rootElement = createHtmlElement(root);				
+		var rootElement = createHtmlElement(root);
 		renderChildsRecursive(rootElement, root);
 
 		Browser.document.body.appendChild(rootElement);
@@ -71,7 +89,20 @@ class HtmlRender implements IRender {
 	 * @param element 
 	 */
 	public function update(element:Element) {		
+		trace("UPDATE");
 		var htmlElement:js.html.Element = cast element.nativeElement;
-		htmlElement.innerText = element.text;
+		applyToHtmlElement(element, htmlElement);
+	}
+
+	/**
+     * Replace element by new one
+     */
+    public function replace(oldElement:Element, newElement:Element):Void {
+		trace("REPLACE");
+		var htmlElement:js.html.Element = cast oldElement.nativeElement;		
+		var parent = htmlElement.parentElement;
+		var rootElement = createHtmlElement(newElement);
+		renderChildsRecursive(rootElement, newElement);
+		parent.replaceChild(rootElement, htmlElement);
 	}
 }
