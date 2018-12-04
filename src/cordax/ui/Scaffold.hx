@@ -35,7 +35,10 @@ class Scaffold extends View {
         Cordax.setTitle(settings.title);
 
         var res = new RootElement(this);
-        //if (settings.appBar != null)
+        if (settings.appBar != null) {
+            var appbarElement = settings.appBar.toElement();
+            res.addChild(appbarElement);
+        }
 
         var content = settings.content.toElement();
         res.addChild(content);

@@ -3,25 +3,28 @@ package cordax.layouts;
 import cordax.native.Element;
 import cordax.ui.View;
 
-typedef ColumnSettings = {    
+/**
+ * Row settings
+ */
+typedef RowSettings = {    
     @:optional var crossAlign:String;
     var childs:Array<View>;
 }
 
 /**
- * Column layout
+ * Row layout
  */
-class Column extends View {
+class Row extends View {
     /**
      * Settings
      */
-    public var settings:ColumnSettings;
+    public var settings:RowSettings;
 
     /**
      * Constructor
      * @param init 
      */
-    public function new(settings:ColumnSettings) {
+    public function new(settings:RowSettings) {
         super();
         this.settings = settings;
     }

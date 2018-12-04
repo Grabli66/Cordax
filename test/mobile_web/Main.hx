@@ -27,7 +27,9 @@ class MyApp extends App {
 		caption = 'Clicked: ${count}';
 		return new Scaffold({
 			title: "App",
-			appBar: new AppBar(),
+			appBar: new AppBar({
+				title: new Text({ text: "Test app" })
+			}),
 			content: new Column({
 				childs: [
 					new Text({model: textModel, text: caption}),

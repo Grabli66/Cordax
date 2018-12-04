@@ -232,14 +232,21 @@ cordax_ui_App.prototype = $extend(cordax_ui_View.prototype,{
 	}
 	,__class__: cordax_ui_App
 });
-var cordax_ui_AppBar = function() {
+var cordax_ui_AppBar = function(settings) {
 	cordax_ui_View.call(this);
+	this.settings = settings;
 };
 cordax_ui_AppBar.__name__ = ["cordax","ui","AppBar"];
 cordax_ui_AppBar.__super__ = cordax_ui_View;
 cordax_ui_AppBar.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
 		var res = new cordax_native_RootElement(this);
+		if(this.settings != null) {
+			if(this.settings.title != null) {
+				var titleElement = this.settings.title.toElement();
+				res.addChild(titleElement);
+			}
+		}
 		return res;
 	}
 	,__class__: cordax_ui_AppBar
@@ -269,6 +276,10 @@ cordax_ui_Scaffold.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
 		cordax_Cordax.setTitle(this.settings.title);
 		var res = new cordax_native_RootElement(this);
+		if(this.settings.appBar != null) {
+			var appbarElement = this.settings.appBar.toElement();
+			res.addChild(appbarElement);
+		}
 		var content = this.settings.content.toElement();
 		res.addChild(content);
 		return res;
@@ -437,7 +448,7 @@ mobile_$web_MyApp.prototype = $extend(cordax_ui_App.prototype,{
 	render: function() {
 		var _gthis = this;
 		this.caption = "Clicked: " + this.count;
-		return new cordax_ui_Scaffold({ title : "App", appBar : new cordax_ui_AppBar(), content : new cordax_layouts_Column({ childs : [new cordax_ui_Text({ model : this.textModel, text : this.caption}),new cordax_ui_Button({ text : "Click me!", onClick : function() {
+		return new cordax_ui_Scaffold({ title : "App", appBar : new cordax_ui_AppBar({ title : new cordax_ui_Text({ text : "Test app"})}), content : new cordax_layouts_Column({ childs : [new cordax_ui_Text({ model : this.textModel, text : this.caption}),new cordax_ui_Button({ text : "Click me!", onClick : function() {
 			_gthis.count += 1;
 			_gthis.caption = "Clicked: " + _gthis.count;
 			_gthis.setState();

@@ -47,6 +47,11 @@ html, body {
     flex-direction: row;
     height: 3.6em;
     color: #fff;
+    align-items: center;
+}
+
+.appbar .title {
+    
 }
 
 .drawer {
