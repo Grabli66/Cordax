@@ -1,5 +1,6 @@
 package cordax.native;
 
+import cordax.ui.View;
 #if js
     import js.Browser.*;
 #end
@@ -8,7 +9,6 @@ package cordax.native;
  * Native element that will be rendered
  */
 @:allow(cordax.native.IRender)
-@:allow(cordax.Cordax)
 class Element {
     /**
      * Child elements
@@ -51,7 +51,7 @@ class Element {
     /**
      * Constructor
      */
-    private function new(name:String) {        
+    public function new(name:String) {        
         childArray = new Array<Element>();
         this.name = name;
     }
@@ -69,5 +69,19 @@ class Element {
      */
     public function update() {
         render.update(this);
+    }
+}
+
+/**
+ * Root element for all views
+ */
+class RootElement extends Element {
+    /**
+     * Constructor
+     * @param view 
+     */
+    public function new(view:View) {
+        super(view.name);
+        Cordax.registerViewElement(view, this);
     }
 }

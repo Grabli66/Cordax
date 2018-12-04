@@ -12,6 +12,7 @@ import cordax.native.html.HtmlRender;
 /**
  * Helper
  */
+@:allow(cordax.native.Element)
 class Cordax {
 	/**
 	 * Elements by view id
@@ -24,6 +25,13 @@ class Cordax {
 	private static var render:IRender;
 
 	/**
+	 * Register view element
+	 */
+	private static function registerViewElement(view:View, element:Element) {
+		views[view.id] = element;
+	}
+
+	/**
 	 * Run application with root view
 	 * @param view
 	 */
@@ -31,9 +39,9 @@ class Cordax {
 		#if js
 		render = new HtmlRender();
 		#end		
+		
+		var root = view.toElement();
 
-		var root = new Element("application");
-		view.mount(root);
 		render.render(root);
 	}
 
@@ -44,17 +52,6 @@ class Cordax {
 	public static function partialRender(view:View) {
 		var element = views.get(view.id);
 		//element.parent.replaceElement(element);
-	}
-
-	/**
-	 * Create new element and register it
-	 * @param view 
-	 * @return Element
-	 */
-	public static function createElement(view:View):Element {
-		var res = new Element(view.name);
-		views[view.id] = res;
-		return res;
 	}
 
 	/**

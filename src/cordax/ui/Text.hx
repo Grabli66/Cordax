@@ -35,7 +35,7 @@ class Text extends View {
     /**
      * Text element
      */
-    private var textElement:Element;
+    private var textElement:RootElement;
 
     /**
      * Settings
@@ -68,11 +68,11 @@ class Text extends View {
     }
 
     /**
-     *  Convert view to element and mount to parent
-     */
-    public override function mount(parent:Element) {
-        textElement = Cordax.createElement(this);
+	 * Convert view to element
+	 */
+	public override function toElement():RootElement {
+        textElement = new RootElement(this);
         textElement.text = settings.text;
-        parent.addChild(textElement);
+        return textElement;
     }
 }

@@ -102,13 +102,13 @@ class View {
 	}
 
 	/**
-	 * Convert view to element and mount to parent
+	 * Convert view to element
 	 */
-	public function mount(parent:Element):Void {
-		var res = Cordax.createElement(this);
-		var childView = render();
-		if (childView != null)
-			childView.mount(res);
-		parent.addChild(res);
+	public function toElement():RootElement {
+		var res = new RootElement(this);
+		var child = render();
+		if (child != null)
+			res.addChild(child.toElement());
+		return res;
 	}
 }

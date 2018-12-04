@@ -24,13 +24,13 @@ class Column extends View {
     }
 
     /**
-	 * Convert view to element and mount to parent
+	 * Convert view to element
 	 */
-	public override function mount(parent:Element):Void {
-        var res = Cordax.createElement(this);
+	public override function toElement():RootElement {
+        var res = new RootElement(this);
         for (child in settings.childs) {
-            child.mount(res);
+            res.addChild(child.toElement());
         }
-        parent.addChild(res);
+        return res;
     }
 }

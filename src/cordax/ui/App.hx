@@ -26,16 +26,16 @@ class App extends View {
     }
 
     /**
-	 * Convert view to element and mount to parent
+	 * Convert view to element
 	 */
-	public override function mount(parent:Element):Void {
+	public override function toElement():RootElement {
         Cordax.setTitle(settings.title);
 
-        var res = Cordax.createElement(this);
-        if (settings.appBar != null)
-            settings.appBar.mount(res);
+        var res = new RootElement(this);
+        //if (settings.appBar != null)
 
-        settings.content.mount(res);
-        parent.addChild(res);
+        var content = settings.content.toElement();
+        res.addChild(content);
+        return res;
     }
 }

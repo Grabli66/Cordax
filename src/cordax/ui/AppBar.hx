@@ -13,10 +13,10 @@ typedef AppBarSettings = {
  */
 class AppBar extends View {
     /**
-	 * Convert view to element and mount to parent
+	 * Convert view to element
 	 */
-	public override function mount(parent:Element):Void {
-        var res = Cordax.createElement(this);
-        parent.addChild(res);
+	public override function toElement():RootElement {
+        var res = new RootElement(this);
+        return res;
     }
 }
