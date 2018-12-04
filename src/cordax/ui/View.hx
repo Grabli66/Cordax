@@ -88,6 +88,13 @@ class View {
 	}
 
 	/**
+	 * Change state and rerender view
+	 */
+	public function setState():Void {
+		Cordax.partialRender(this);
+	}
+
+	/**
 	 * Render view layout from other views (childs)
 	 */
 	public function render():View {
@@ -98,7 +105,7 @@ class View {
 	 * Convert view to element and mount to parent
 	 */
 	public function mount(parent:Element):Void {
-		var res = new Element(name);
+		var res = Cordax.createElement(this);
 		var childView = render();
 		if (childView != null)
 			childView.mount(res);

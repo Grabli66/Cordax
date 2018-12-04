@@ -16,7 +16,7 @@ class AppBar extends View {
 	 * Convert view to element and mount to parent
 	 */
 	public override function mount(parent:Element):Void {
-        var res = new Element(name);
+        var res = Cordax.createElement(this);
         parent.addChild(res);
     }
 }

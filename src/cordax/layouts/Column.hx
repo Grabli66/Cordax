@@ -27,7 +27,7 @@ class Column extends View {
 	 * Convert view to element and mount to parent
 	 */
 	public override function mount(parent:Element):Void {
-        var res = new Element(name);
+        var res = Cordax.createElement(this);
         for (child in settings.childs) {
             child.mount(res);
         }

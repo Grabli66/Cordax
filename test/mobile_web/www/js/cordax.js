@@ -51,6 +51,22 @@ cordax_Cordax.run = function(view) {
 	view.mount(root);
 	cordax_Cordax.render.render(root);
 };
+cordax_Cordax.partialRender = function(view) {
+	var key = view.id;
+	var _this = cordax_Cordax.views;
+	var element = __map_reserved[key] != null ? _this.getReserved(key) : _this.h[key];
+};
+cordax_Cordax.createElement = function(view) {
+	var res = new cordax_native_Element(view.get_name());
+	var k = view.id;
+	var _this = cordax_Cordax.views;
+	if(__map_reserved[k] != null) {
+		_this.setReserved(k,res);
+	} else {
+		_this.h[k] = res;
+	}
+	return res;
+};
 cordax_Cordax.setTitle = function(title) {
 	window.document.getElementsByTagName("title")[0].innerText = title;
 };
@@ -64,11 +80,14 @@ cordax_ui_View.prototype = {
 		var items = fullName.split(".");
 		return items[items.length - 1];
 	}
+	,setState: function() {
+		cordax_Cordax.partialRender(this);
+	}
 	,render: function() {
 		return null;
 	}
 	,mount: function(parent) {
-		var res = new cordax_native_Element(this.get_name());
+		var res = cordax_Cordax.createElement(this);
 		var childView = this.render();
 		if(childView != null) {
 			childView.mount(res);
@@ -85,7 +104,7 @@ cordax_layouts_Column.__name__ = ["cordax","layouts","Column"];
 cordax_layouts_Column.__super__ = cordax_ui_View;
 cordax_layouts_Column.prototype = $extend(cordax_ui_View.prototype,{
 	mount: function(parent) {
-		var res = new cordax_native_Element(this.get_name());
+		var res = cordax_Cordax.createElement(this);
 		var _g = 0;
 		var _g1 = this.settings.childs;
 		while(_g < _g1.length) {
@@ -176,7 +195,7 @@ cordax_ui_App.__super__ = cordax_ui_View;
 cordax_ui_App.prototype = $extend(cordax_ui_View.prototype,{
 	mount: function(parent) {
 		cordax_Cordax.setTitle(this.settings.title);
-		var res = new cordax_native_Element(this.get_name());
+		var res = cordax_Cordax.createElement(this);
 		if(this.settings.appBar != null) {
 			this.settings.appBar.mount(res);
 		}
@@ -192,7 +211,7 @@ cordax_ui_AppBar.__name__ = ["cordax","ui","AppBar"];
 cordax_ui_AppBar.__super__ = cordax_ui_View;
 cordax_ui_AppBar.prototype = $extend(cordax_ui_View.prototype,{
 	mount: function(parent) {
-		var res = new cordax_native_Element(this.get_name());
+		var res = cordax_Cordax.createElement(this);
 		parent.addChild(res);
 	}
 	,__class__: cordax_ui_AppBar
@@ -205,7 +224,7 @@ cordax_ui_Button.__name__ = ["cordax","ui","Button"];
 cordax_ui_Button.__super__ = cordax_ui_View;
 cordax_ui_Button.prototype = $extend(cordax_ui_View.prototype,{
 	mount: function(parent) {
-		var res = new cordax_native_Element(this.get_name());
+		var res = cordax_Cordax.createElement(this);
 		res.text = this.settings.text;
 		res.onClick = this.settings.onClick;
 		parent.addChild(res);
@@ -274,7 +293,7 @@ cordax_ui_Text.__name__ = ["cordax","ui","Text"];
 cordax_ui_Text.__super__ = cordax_ui_View;
 cordax_ui_Text.prototype = $extend(cordax_ui_View.prototype,{
 	mount: function(parent) {
-		this.textElement = new cordax_native_Element(this.get_name());
+		this.textElement = cordax_Cordax.createElement(this);
 		this.textElement.text = this.settings.text;
 		parent.addChild(this.textElement);
 	}
@@ -403,6 +422,7 @@ String.prototype.__class__ = String;
 String.__name__ = ["String"];
 Array.__name__ = ["Array"];
 var __map_reserved = {};
+cordax_Cordax.views = new haxe_ds_StringMap();
 js_Boot.__toStr = ({ }).toString;
 mobile_$web_Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

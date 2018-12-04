@@ -31,7 +31,7 @@ class App extends View {
 	public override function mount(parent:Element):Void {
         Cordax.setTitle(settings.title);
 
-        var res = new Element(name);
+        var res = Cordax.createElement(this);
         if (settings.appBar != null)
             settings.appBar.mount(res);
 

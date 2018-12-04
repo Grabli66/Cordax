@@ -71,7 +71,7 @@ class Text extends View {
      *  Convert view to element and mount to parent
      */
     public override function mount(parent:Element) {
-        textElement = new Element(name);
+        textElement = Cordax.createElement(this);
         textElement.text = settings.text;
         parent.addChild(textElement);
     }

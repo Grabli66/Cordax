@@ -8,6 +8,7 @@ package cordax.native;
  * Native element that will be rendered
  */
 @:allow(cordax.native.IRender)
+@:allow(cordax.Cordax)
 class Element {
     /**
      * Child elements
@@ -50,7 +51,7 @@ class Element {
     /**
      * Constructor
      */
-    public function new(name:String) {        
+    private function new(name:String) {        
         childArray = new Array<Element>();
         this.name = name;
     }
