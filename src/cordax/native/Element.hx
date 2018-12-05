@@ -23,7 +23,12 @@ class Element {
     /**
      * Render to update element
      */
-    private var render:IRender;
+    private var render:IRender;    
+
+    /**
+     * Element id
+     */
+    public final id:String;
 
     /**
      * Element name
@@ -56,9 +61,10 @@ class Element {
     /**
      * Constructor
      */
-    public function new(name:String) {        
+    public function new(name:String, id:String = "") {
         childArray = new Array<Element>();
         this.name = name;
+        this.id = id;
     }
 
     /**
@@ -86,7 +92,7 @@ class RootElement extends Element {
      * @param view 
      */
     public function new(view:View) {
-        super(view.name);
+        super(view.name, view.id);
         Cordax.registerViewElement(view, this);
     }
 }

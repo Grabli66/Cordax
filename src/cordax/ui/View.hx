@@ -95,6 +95,15 @@ class View {
 	}
 
 	/**
+	 * Show dialog
+	 * @param init 
+	 * @return -> Dialog)
+	 */
+	public function showDialog(init:() -> Dialog) {
+		Cordax.renderDialog(init());
+	}
+
+	/**
 	 * Render view layout from other views (childs)
 	 */
 	public function render():View {

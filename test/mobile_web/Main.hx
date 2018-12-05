@@ -1,5 +1,6 @@
 package mobile_web;
 
+import cordax.ui.Dialog.SimpleDialog;
 import cordax.Cordax;
 import cordax.layouts.Column;
 import cordax.ui.App;
@@ -38,9 +39,14 @@ class MyApp extends App {
 						onClick: () -> {
 							count += 1;
 							caption = 'Clicked: ${count}';
+							showDialog(() -> {
+								new SimpleDialog({
+									content: new Text({ text: "Hello" })
+								});
+							});
 							//textModel.text = 'Clicked: ${count}';
 							//textModel.apply();
-							setState();
+							//setState();
 						}
 					})
 				]

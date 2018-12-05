@@ -1,15 +1,20 @@
 package cordax.native;
 
-import cordax.ui.View;
+import cordax.native.Element.RootElement;
 
 /**
  * Renders elements to native
  */
 interface IRender {
     /**
-     * Render document to native
+     * Render element to native
      */
-    function render(root:Element):Void;
+    function render(root:RootElement):Void;
+
+    /**
+     * Render element to native dialog
+     */
+    function renderDialog(root:RootElement):Void;
 
     /**
      * Update element
@@ -19,5 +24,5 @@ interface IRender {
     /**
      * Replace element by new one
      */
-    function replace(oldElement:Element, newElement:Element):Void;
+    function replace(oldElement:Element, newElement:Element):Void;    
 }

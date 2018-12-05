@@ -3,6 +3,7 @@ package cordax;
 import cordax.native.Element;
 import cordax.native.IRender;
 import cordax.ui.View;
+import cordax.ui.Dialog;
 
 #if js
 import js.Browser;
@@ -52,6 +53,14 @@ class Cordax {
 		var oldElement = views.get(view.id);
 		var newElement = view.toElement();
 		render.replace(oldElement, newElement);
+	}
+
+	/**
+	 * Render and show dialog
+	 * @param dialog 
+	 */
+	public static function renderDialog(dialog:Dialog) {
+		render.renderDialog(dialog.toElement());
 	}
 
 	/**

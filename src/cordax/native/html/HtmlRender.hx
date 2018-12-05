@@ -1,5 +1,6 @@
 package cordax.native.html;
 
+import cordax.native.Element.RootElement;
 import cordax.ui.View;
 import js.Browser;
 
@@ -73,7 +74,7 @@ class HtmlRender implements IRender {
 	/**
 	 * Render document to native
 	 */
-	public function render(root:Element) {
+	public function render(root:RootElement) {
 		trace("RENDER");
 
 		Browser.document.body.innerHTML = "";
@@ -82,6 +83,13 @@ class HtmlRender implements IRender {
 		renderChildsRecursive(rootElement, root);
 
 		Browser.document.body.appendChild(rootElement);
+	}
+
+	/**
+     * Render element to native dialog
+     */
+	public function renderDialog(root:RootElement) {
+		trace("RENDER DIALOG");
 	}
 
 	/**
