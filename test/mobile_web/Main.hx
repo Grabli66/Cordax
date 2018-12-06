@@ -29,7 +29,7 @@ class MyApp extends App {
 		return new Scaffold({
 			title: "App",
 			appBar: new AppBar({
-				title: new Text({ text: "Test app" })
+				title: new Text({text: "Test app"})
 			}),
 			content: new Column({
 				childs: [
@@ -39,14 +39,20 @@ class MyApp extends App {
 						onClick: () -> {
 							count += 1;
 							caption = 'Clicked: ${count}';
-							showDialog(() -> {
-								new SimpleDialog({
-									content: new Text({ text: "Hello" })
-								});
+							showDialog({
+								builder: () -> {
+									new SimpleDialog({
+										title: new Text({text: "Users"}),
+										content: new Text({text: "Hello"})
+									});
+								},
+								onClose: () -> {
+									trace("CLOSE");
+								}
 							});
-							//textModel.text = 'Clicked: ${count}';
-							//textModel.apply();
-							//setState();
+							// textModel.text = 'Clicked: ${count}';
+							// textModel.apply();
+							// setState();
 						}
 					})
 				]

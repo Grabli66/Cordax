@@ -1,5 +1,6 @@
 package cordax.ui;
 
+import cordax.native.Element;
 import cordax.layouts.Row;
 import cordax.native.Element.RootElement;
 
@@ -13,11 +14,8 @@ class Dialog extends View {
  * Simple dialog settings
  */
 typedef SimpleDialogSettings = {
-	var content:View;
-}
-
-class SimpleDialogHeader extends Row {
-
+    var title:View;
+	var content:View;    
 }
 
 /**
@@ -42,13 +40,18 @@ class SimpleDialog extends Dialog {
 	 */
 	public override function toElement():RootElement {
 		var res = new RootElement(this);
-        var row = new SimpleDialogHeader({
-            childs: [
-                settings.content
-            ]
-        });        
+        res.onClick = () -> {
+            //Cordax.closeDialog(this);
+        };
 
-        res.addChild(row.toElement());
+        var header = new Element("header");
+        var title = settings.title.toElement();
+        title.css.push("title");
+        header.addChild(title);
+
+        res.addChild(header);
+        var content = settings.content.toElement();        
+        res.addChild(content);
 		return res;
 	}
 }

@@ -1,5 +1,6 @@
 package cordax.ui;
 
+import cordax.ui.Dialog;
 import haxe.crypto.Md5;
 import cordax.Cordax;
 import cordax.native.Element;
@@ -61,6 +62,14 @@ class ViewModel {
 }
 
 /**
+ * Show dialog settings
+ */
+typedef ShowDialogSettings = {
+	var builder:() -> Dialog;
+	var onClose:() -> Void;
+}
+
+/**
  * Base class of all view components
  */
 class View {
@@ -99,8 +108,8 @@ class View {
 	 * @param init 
 	 * @return -> Dialog)
 	 */
-	public function showDialog(init:() -> Dialog) {
-		Cordax.renderDialog(init());
+	public function showDialog(settings:ShowDialogSettings) {
+		Cordax.renderDialog(settings.builder());
 	}
 
 	/**

@@ -105,6 +105,9 @@ class HtmlRender implements IRender {
 
 		var overlay = Browser.document.createDivElement();
 		overlay.className = "overlay";
+		overlay.onclick = () -> {
+			trace("CLICK");
+		};
 		dialogElement.appendChild(overlay);
 
 		var rootElement = createHtmlElement(root);

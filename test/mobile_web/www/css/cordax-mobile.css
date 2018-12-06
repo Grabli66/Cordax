@@ -35,7 +35,7 @@ html, body {
     padding-bottom: 10px;
 }
 
-#dialogs .simpledialog .simpledialogheader {
+#dialogs .simpledialog .header {
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -43,6 +43,10 @@ html, body {
     height: 56px;
     background-color: #0978a4;
     color: #fff;
+}
+
+#dialogs .simpledialog .header .title {
+    padding-left: 1em;
 }
 
 .flex-1 {
