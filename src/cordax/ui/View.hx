@@ -4,6 +4,7 @@ import cordax.ui.Dialog;
 import haxe.crypto.Md5;
 import cordax.Cordax;
 import cordax.native.elements.Element;
+import cordax.native.elements.RootElement;
 
 class Guid {
 	public static function generate():String {

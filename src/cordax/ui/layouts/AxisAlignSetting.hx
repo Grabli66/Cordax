@@ -1,4 +1,4 @@
-package components.layouts;
+package components.ui.layouts;
 
 /**
  * Flex cross axis align settings

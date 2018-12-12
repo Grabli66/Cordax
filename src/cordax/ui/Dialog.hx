@@ -1,8 +1,9 @@
 package cordax.ui;
 
+import cordax.native.elements.LayoutElement;
 import cordax.native.elements.Element;
-import cordax.layouts.Row;
-import cordax.native.elements.Element.RootElement;
+import cordax.native.elements.RootElement;
+import cordax.ui.layouts.Row;
 
 /**
  * Base dialog
@@ -41,7 +42,7 @@ class SimpleDialog extends Dialog {
 	public override function toElement():RootElement {
 		var res = new RootElement(this);
         
-        var header = new Element("header");
+        var header = new LayoutElement("header");
         var title = settings.title.toElement();
         title.css.push("title");
         header.addChild(title);

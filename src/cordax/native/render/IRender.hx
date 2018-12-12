@@ -1,6 +1,7 @@
 package cordax.native.render;
 
 import cordax.native.elements.Element;
+import cordax.native.elements.RootElement;
 
 /**
  * Renders elements to native

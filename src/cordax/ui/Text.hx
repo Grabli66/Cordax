@@ -2,6 +2,7 @@ package cordax.ui;
 
 import cordax.ui.View.ViewModel;
 import cordax.native.elements.Element;
+import cordax.native.elements.RootElement;
 
 typedef TextSettings = {    
     @:optional var model:TextModel;

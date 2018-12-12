@@ -3,20 +3,11 @@ package cordax.native.elements;
 import cordax.ui.View;
 import cordax.native.render.IRender;
 
-#if js
-    import js.Browser.*;
-#end
-
 /**
  * Native element that will be rendered
  */
 @:allow(cordax.native.render.IRender)
 class Element {
-    /**
-     * Child elements
-     */
-    private var childArray:Array<Element>;
-
     /**
      * Native element
      */
@@ -25,12 +16,7 @@ class Element {
     /**
      * Render to update element
      */
-    private var render:IRender;    
-
-    /**
-     * Element id
-     */
-    public final id:String;
+    private var render:IRender;
 
     /**
      * Element name
@@ -43,38 +29,15 @@ class Element {
     public final css = new Array<String>();
 
     /**
-     * Inner text
-     */
-    public var text:String;
-
-    /**
      * On click callback
      */
     public var onClick:() -> Void;
 
     /**
-     * Return childs iterator
-     */
-    public var childs(get, never):Iterator<Element>;
-    public function get_childs():Iterator<Element> {
-        return childArray.iterator();
-    }
-
-    /**
      * Constructor
      */
-    public function new(name:String, id:String = "") {
-        childArray = new Array<Element>();
+    public function new(name:String) {
         this.name = name;
-        this.id = id;
-    }
-
-    /**
-     * Add child
-     * @param child 
-     */
-    public function addChild(child:Element) {
-        childArray.push(child);
     }
 
     /**
@@ -82,19 +45,5 @@ class Element {
      */
     public function update() {
         render.update(this);
-    }
-}
-
-/**
- * Root element for all views
- */
-class RootElement extends Element {
-    /**
-     * Constructor
-     * @param view 
-     */
-    public function new(view:View) {
-        super(view.name, view.id);
-        Cordax.registerViewElement(view, this);
     }
 }

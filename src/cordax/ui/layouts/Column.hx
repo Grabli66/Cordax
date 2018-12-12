@@ -1,6 +1,7 @@
-package cordax.layouts;
+package cordax.ui.layouts;
 
 import cordax.native.elements.Element;
+import cordax.native.elements.RootElement;
 import cordax.ui.View;
 
 typedef ColumnSettings = {    

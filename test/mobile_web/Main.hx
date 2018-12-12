@@ -2,7 +2,7 @@ package mobile_web;
 
 import cordax.ui.Dialog.SimpleDialog;
 import cordax.Cordax;
-import cordax.layouts.Column;
+import cordax.ui.layouts.Column;
 import cordax.ui.App;
 import cordax.ui.View;
 import cordax.ui.Text;

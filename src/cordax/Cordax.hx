@@ -76,7 +76,7 @@ class Cordax {
 	 * @param dialog 
 	 */
 	public static function closeDialog() {
-
+		
 	}
 
 	/**

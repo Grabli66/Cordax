@@ -1,6 +1,7 @@
 package cordax.ui;
 
 import cordax.native.elements.Element;
+import cordax.native.elements.RootElement;
 
 /**
  * Scaffold settings

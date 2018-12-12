@@ -1,7 +1,10 @@
 package cordax.native.render.html;
 
-import js.html.Document;
+
+import cordax.native.elements.LayoutElement;
 import cordax.native.elements.Element;
+import cordax.native.elements.TextElement;
+import cordax.native.elements.RootElement;
 import cordax.ui.View;
 import js.Browser;
 
@@ -44,8 +47,11 @@ class HtmlRender implements IRender {
 			htmlElement.classList.add(css);
 		}
 
-		if (element.text != null)
-			htmlElement.innerText = element.text;
+		if ((element is TextElement)) {
+			var textElement:TextElement = cast element;
+			if (textElement.text != null)
+				htmlElement.innerText = textElement.text;
+		}
 
 		if (element.onClick != null)
 			htmlElement.onclick = element.onClick;
@@ -70,10 +76,13 @@ class HtmlRender implements IRender {
 	 * @param element
 	 */
 	private function renderChildsRecursive(root:js.html.Element, element:Element) {
-		for (child in element.childs) {
-			var childDiv = createHtmlElement(child);
-			renderChildsRecursive(childDiv, child);
-			root.appendChild(childDiv);
+		if ((element is LayoutElement)) {
+			var layoutElement:LayoutElement = cast element;
+			for (child in layoutElement.childs) {
+				var childDiv = createHtmlElement(child);
+				renderChildsRecursive(childDiv, child);
+				root.appendChild(childDiv);			
+			}
 		}
 	}
 
