@@ -62,14 +62,6 @@ class ViewModel {
 }
 
 /**
- * Show dialog settings
- */
-typedef ShowDialogSettings = {
-	var builder:() -> Dialog;
-	var onClose:() -> Void;
-}
-
-/**
  * Base class of all view components
  */
 class View {
@@ -109,7 +101,7 @@ class View {
 	 * @return -> Dialog)
 	 */
 	public function showDialog(settings:ShowDialogSettings) {
-		Cordax.renderDialog(settings.builder());
+		Cordax.renderDialog(settings);
 	}
 
 	/**

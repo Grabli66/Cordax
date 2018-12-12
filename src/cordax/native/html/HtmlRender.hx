@@ -95,7 +95,7 @@ class HtmlRender implements IRender {
 	/**
 	 * Render element to native dialog
 	 */
-	public function renderDialog(root:RootElement) {
+	public function renderDialog(root:RootElement, onClose:() -> Void) {
 		trace("RENDER DIALOG");
 		if (dialogElement != null)
 			dialogElement.remove();
@@ -106,7 +106,8 @@ class HtmlRender implements IRender {
 		var overlay = Browser.document.createDivElement();
 		overlay.className = "overlay";
 		overlay.onclick = () -> {
-			trace("CLICK");
+			onClose();
+			dialogElement.remove();
 		};
 		dialogElement.appendChild(overlay);
 

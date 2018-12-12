@@ -11,6 +11,14 @@ import cordax.native.html.HtmlRender;
 #end
 
 /**
+ * Show dialog settings
+ */
+typedef ShowDialogSettings = {
+	var builder:() -> Dialog;
+	var onClose:() -> Void;
+}
+
+/**
  * Helper
  */
 @:allow(cordax.native.Element)
@@ -59,8 +67,8 @@ class Cordax {
 	 * Render and show dialog
 	 * @param dialog 
 	 */
-	public static function renderDialog(dialog:Dialog) {
-		render.renderDialog(dialog.toElement());
+	public static function renderDialog(settings:ShowDialogSettings) {
+		render.renderDialog(settings.builder().toElement(), settings.onClose);
 	}
 
 	/**

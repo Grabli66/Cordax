@@ -14,7 +14,7 @@ interface IRender {
     /**
      * Render element to native dialog
      */
-    function renderDialog(root:RootElement):Void;
+    function renderDialog(root:RootElement, onClose:() -> Void):Void;
 
     /**
      * Update element

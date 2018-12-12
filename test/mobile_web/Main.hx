@@ -47,7 +47,7 @@ class MyApp extends App {
 									});
 								},
 								onClose: () -> {
-									trace("CLOSE");
+									trace("CLOSE DIALOG");
 								}
 							});
 							// textModel.text = 'Clicked: ${count}';
