@@ -1,6 +1,6 @@
-package cordax.native;
+package cordax.native.render;
 
-import cordax.native.Element.RootElement;
+import cordax.native.elements.Element;
 
 /**
  * Renders elements to native
@@ -15,6 +15,12 @@ interface IRender {
      * Render element to native dialog
      */
     function renderDialog(root:RootElement, onClose:() -> Void):Void;
+
+    /**
+     * Close current dialog
+     * @param id 
+     */
+    function closeDialog():Void;
 
     /**
      * Update element

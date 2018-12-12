@@ -1,6 +1,8 @@
-package cordax.native;
+package cordax.native.elements;
 
 import cordax.ui.View;
+import cordax.native.render.IRender;
+
 #if js
     import js.Browser.*;
 #end
@@ -8,7 +10,7 @@ import cordax.ui.View;
 /**
  * Native element that will be rendered
  */
-@:allow(cordax.native.IRender)
+@:allow(cordax.native.render.IRender)
 class Element {
     /**
      * Child elements

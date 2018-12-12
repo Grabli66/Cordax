@@ -1,8 +1,8 @@
 package cordax.ui;
 
-import cordax.native.Element;
+import cordax.native.elements.Element;
 import cordax.layouts.Row;
-import cordax.native.Element.RootElement;
+import cordax.native.elements.Element.RootElement;
 
 /**
  * Base dialog
@@ -40,14 +40,18 @@ class SimpleDialog extends Dialog {
 	 */
 	public override function toElement():RootElement {
 		var res = new RootElement(this);
-        res.onClick = () -> {
-            //Cordax.closeDialog(this);
-        };
-
+        
         var header = new Element("header");
         var title = settings.title.toElement();
         title.css.push("title");
         header.addChild(title);
+
+        var closeButton = new Element("close");
+        closeButton.onClick = () -> {
+            trace("CLOOOSE");
+            Cordax.closeDialog();
+        };
+        header.addChild(closeButton);
 
         res.addChild(header);
         var content = settings.content.toElement();        

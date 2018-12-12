@@ -3,7 +3,7 @@ package cordax.ui;
 import cordax.ui.Dialog;
 import haxe.crypto.Md5;
 import cordax.Cordax;
-import cordax.native.Element;
+import cordax.native.elements.Element;
 
 class Guid {
 	public static function generate():String {

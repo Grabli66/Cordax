@@ -1,6 +1,6 @@
 package cordax.ui;
 
-import cordax.native.Element;
+import cordax.native.elements.Element;
 
 typedef ButtonSettings = {    
     var text:String;

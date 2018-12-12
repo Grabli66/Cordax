@@ -1,7 +1,7 @@
-package cordax.native.html;
+package cordax.native.render.html;
 
 import js.html.Document;
-import cordax.native.Element.RootElement;
+import cordax.native.elements.Element;
 import cordax.ui.View;
 import js.Browser;
 
@@ -56,7 +56,7 @@ class HtmlRender implements IRender {
 	 * @param element
 	 * @return js.html.Element
 	 */
-	private function createHtmlElement(element:cordax.native.Element):js.html.Element {
+	private function createHtmlElement(element:Element):js.html.Element {
 		var htmlElement = Browser.document.createDivElement();
 		element.render = this;
 		element.nativeElement = htmlElement;
@@ -69,7 +69,7 @@ class HtmlRender implements IRender {
 	 * @param root
 	 * @param element
 	 */
-	private function renderChildsRecursive(root:js.html.Element, element:cordax.native.Element) {
+	private function renderChildsRecursive(root:js.html.Element, element:Element) {
 		for (child in element.childs) {
 			var childDiv = createHtmlElement(child);
 			renderChildsRecursive(childDiv, child);
@@ -114,6 +114,15 @@ class HtmlRender implements IRender {
 		var rootElement = createHtmlElement(root);
 		renderChildsRecursive(rootElement, root);
 		dialogElement.appendChild(rootElement);
+	}
+
+	/**
+     * Close current dialog
+     * @param id 
+     */
+    public function closeDialog():Void {
+		if (dialogElement != null)
+			dialogElement.remove();
 	}
 
 	/**

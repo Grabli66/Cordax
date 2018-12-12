@@ -55,7 +55,7 @@ cordax_Cordax.registerViewElement = function(view,element) {
 	}
 };
 cordax_Cordax.run = function(view) {
-	cordax_Cordax.render = new cordax_native_html_HtmlRender();
+	cordax_Cordax.render = new cordax_native_render_html_HtmlRender();
 	var root = view.toElement();
 	cordax_Cordax.render.render(root);
 };
@@ -68,6 +68,8 @@ cordax_Cordax.partialRender = function(view) {
 };
 cordax_Cordax.renderDialog = function(settings) {
 	cordax_Cordax.render.renderDialog(settings.builder().toElement(),settings.onClose);
+};
+cordax_Cordax.closeDialog = function() {
 };
 cordax_Cordax.setTitle = function(title) {
 	window.document.getElementsByTagName("title")[0].innerText = title;
@@ -92,7 +94,7 @@ cordax_ui_View.prototype = {
 		return null;
 	}
 	,toElement: function() {
-		var res = new cordax_native_RootElement(this);
+		var res = new cordax_native_elements_RootElement(this);
 		var child = this.render();
 		if(child != null) {
 			res.addChild(child.toElement());
@@ -109,7 +111,7 @@ cordax_layouts_Column.__name__ = ["cordax","layouts","Column"];
 cordax_layouts_Column.__super__ = cordax_ui_View;
 cordax_layouts_Column.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
-		var res = new cordax_native_RootElement(this);
+		var res = new cordax_native_elements_RootElement(this);
 		var _g = 0;
 		var _g1 = this.settings.childs;
 		while(_g < _g1.length) {
@@ -129,7 +131,7 @@ cordax_layouts_Row.__name__ = ["cordax","layouts","Row"];
 cordax_layouts_Row.__super__ = cordax_ui_View;
 cordax_layouts_Row.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
-		var res = new cordax_native_RootElement(this);
+		var res = new cordax_native_elements_RootElement(this);
 		var _g = 0;
 		var _g1 = this.settings.childs;
 		while(_g < _g1.length) {
@@ -141,7 +143,7 @@ cordax_layouts_Row.prototype = $extend(cordax_ui_View.prototype,{
 	}
 	,__class__: cordax_layouts_Row
 });
-var cordax_native_Element = function(name,id) {
+var cordax_native_elements_Element = function(name,id) {
 	if(id == null) {
 		id = "";
 	}
@@ -150,8 +152,8 @@ var cordax_native_Element = function(name,id) {
 	this.name = name;
 	this.id = id;
 };
-cordax_native_Element.__name__ = ["cordax","native","Element"];
-cordax_native_Element.prototype = {
+cordax_native_elements_Element.__name__ = ["cordax","native","elements","Element"];
+cordax_native_elements_Element.prototype = {
 	get_childs: function() {
 		return HxOverrides.iter(this.childArray);
 	}
@@ -161,35 +163,35 @@ cordax_native_Element.prototype = {
 	,update: function() {
 		this.render.update(this);
 	}
-	,__class__: cordax_native_Element
+	,__class__: cordax_native_elements_Element
 };
-var cordax_native_RootElement = function(view) {
-	cordax_native_Element.call(this,view.get_name(),view.id);
+var cordax_native_elements_RootElement = function(view) {
+	cordax_native_elements_Element.call(this,view.get_name(),view.id);
 	cordax_Cordax.registerViewElement(view,this);
 };
-cordax_native_RootElement.__name__ = ["cordax","native","RootElement"];
-cordax_native_RootElement.__super__ = cordax_native_Element;
-cordax_native_RootElement.prototype = $extend(cordax_native_Element.prototype,{
-	__class__: cordax_native_RootElement
+cordax_native_elements_RootElement.__name__ = ["cordax","native","elements","RootElement"];
+cordax_native_elements_RootElement.__super__ = cordax_native_elements_Element;
+cordax_native_elements_RootElement.prototype = $extend(cordax_native_elements_Element.prototype,{
+	__class__: cordax_native_elements_RootElement
 });
-var cordax_native_IRender = function() { };
-cordax_native_IRender.__name__ = ["cordax","native","IRender"];
-cordax_native_IRender.prototype = {
-	__class__: cordax_native_IRender
+var cordax_native_render_IRender = function() { };
+cordax_native_render_IRender.__name__ = ["cordax","native","render","IRender"];
+cordax_native_render_IRender.prototype = {
+	__class__: cordax_native_render_IRender
 };
-var cordax_native_html_ViewPair = function(view,element) {
+var cordax_native_render_html_ViewPair = function(view,element) {
 	this.view = view;
 	this.element = element;
 };
-cordax_native_html_ViewPair.__name__ = ["cordax","native","html","ViewPair"];
-cordax_native_html_ViewPair.prototype = {
-	__class__: cordax_native_html_ViewPair
+cordax_native_render_html_ViewPair.__name__ = ["cordax","native","render","html","ViewPair"];
+cordax_native_render_html_ViewPair.prototype = {
+	__class__: cordax_native_render_html_ViewPair
 };
-var cordax_native_html_HtmlRender = function() {
+var cordax_native_render_html_HtmlRender = function() {
 };
-cordax_native_html_HtmlRender.__name__ = ["cordax","native","html","HtmlRender"];
-cordax_native_html_HtmlRender.__interfaces__ = [cordax_native_IRender];
-cordax_native_html_HtmlRender.prototype = {
+cordax_native_render_html_HtmlRender.__name__ = ["cordax","native","render","html","HtmlRender"];
+cordax_native_render_html_HtmlRender.__interfaces__ = [cordax_native_render_IRender];
+cordax_native_render_html_HtmlRender.prototype = {
 	applyToHtmlElement: function(element,htmlElement) {
 		var elementName = element.name.toLowerCase();
 		htmlElement.classList.add(elementName);
@@ -224,7 +226,7 @@ cordax_native_html_HtmlRender.prototype = {
 		}
 	}
 	,render: function(root) {
-		console.log("src/cordax/native/html/HtmlRender.hx:84:","RENDER");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:84:","RENDER");
 		window.document.body.innerHTML = "";
 		this.dialogElement = null;
 		var rootElement = this.createHtmlElement(root);
@@ -233,7 +235,7 @@ cordax_native_html_HtmlRender.prototype = {
 	}
 	,renderDialog: function(root,onClose) {
 		var _gthis = this;
-		console.log("src/cordax/native/html/HtmlRender.hx:99:","RENDER DIALOG");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:99:","RENDER DIALOG");
 		if(this.dialogElement != null) {
 			this.dialogElement.remove();
 		}
@@ -252,20 +254,25 @@ cordax_native_html_HtmlRender.prototype = {
 		this.renderChildsRecursive(rootElement,root);
 		this.dialogElement.appendChild(rootElement);
 	}
+	,closeDialog: function() {
+		if(this.dialogElement != null) {
+			this.dialogElement.remove();
+		}
+	}
 	,update: function(element) {
-		console.log("src/cordax/native/html/HtmlRender.hx:124:","UPDATE");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:133:","UPDATE");
 		var htmlElement = element.nativeElement;
 		this.applyToHtmlElement(element,htmlElement);
 	}
 	,replace: function(oldElement,newElement) {
-		console.log("src/cordax/native/html/HtmlRender.hx:133:","REPLACE");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:142:","REPLACE");
 		var htmlElement = oldElement.nativeElement;
 		var parent = htmlElement.parentElement;
 		var rootElement = this.createHtmlElement(newElement);
 		this.renderChildsRecursive(rootElement,newElement);
 		parent.replaceChild(rootElement,htmlElement);
 	}
-	,__class__: cordax_native_html_HtmlRender
+	,__class__: cordax_native_render_html_HtmlRender
 };
 var cordax_ui_App = function() {
 	cordax_ui_View.call(this);
@@ -274,7 +281,7 @@ cordax_ui_App.__name__ = ["cordax","ui","App"];
 cordax_ui_App.__super__ = cordax_ui_View;
 cordax_ui_App.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
-		var res = new cordax_native_RootElement(this);
+		var res = new cordax_native_elements_RootElement(this);
 		res.css.push("application");
 		var child = this.render();
 		if(child != null) {
@@ -292,7 +299,7 @@ cordax_ui_AppBar.__name__ = ["cordax","ui","AppBar"];
 cordax_ui_AppBar.__super__ = cordax_ui_View;
 cordax_ui_AppBar.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
-		var res = new cordax_native_RootElement(this);
+		var res = new cordax_native_elements_RootElement(this);
 		if(this.settings != null) {
 			if(this.settings.title != null) {
 				var titleElement = this.settings.title.toElement();
@@ -311,7 +318,7 @@ cordax_ui_Button.__name__ = ["cordax","ui","Button"];
 cordax_ui_Button.__super__ = cordax_ui_View;
 cordax_ui_Button.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
-		var res = new cordax_native_RootElement(this);
+		var res = new cordax_native_elements_RootElement(this);
 		res.text = this.settings.text;
 		res.onClick = this.settings.onClick;
 		return res;
@@ -334,14 +341,18 @@ cordax_ui_SimpleDialog.__name__ = ["cordax","ui","SimpleDialog"];
 cordax_ui_SimpleDialog.__super__ = cordax_ui_Dialog;
 cordax_ui_SimpleDialog.prototype = $extend(cordax_ui_Dialog.prototype,{
 	toElement: function() {
-		var res = new cordax_native_RootElement(this);
-		res.onClick = function() {
-			return { };
-		};
-		var header = new cordax_native_Element("header");
+		var res = new cordax_native_elements_RootElement(this);
+		var header = new cordax_native_elements_Element("header");
 		var title = this.settings.title.toElement();
 		title.css.push("title");
 		header.addChild(title);
+		var closeButton = new cordax_native_elements_Element("close");
+		closeButton.onClick = function() {
+			console.log("src/cordax/ui/Dialog.hx:51:","CLOOOSE");
+			cordax_Cordax.closeDialog();
+			return;
+		};
+		header.addChild(closeButton);
 		res.addChild(header);
 		var content = this.settings.content.toElement();
 		res.addChild(content);
@@ -358,7 +369,7 @@ cordax_ui_Scaffold.__super__ = cordax_ui_View;
 cordax_ui_Scaffold.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
 		cordax_Cordax.setTitle(this.settings.title);
-		var res = new cordax_native_RootElement(this);
+		var res = new cordax_native_elements_RootElement(this);
 		if(this.settings.appBar != null) {
 			var appbarElement = this.settings.appBar.toElement();
 			res.addChild(appbarElement);
@@ -431,7 +442,7 @@ cordax_ui_Text.__name__ = ["cordax","ui","Text"];
 cordax_ui_Text.__super__ = cordax_ui_View;
 cordax_ui_Text.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
-		this.textElement = new cordax_native_RootElement(this);
+		this.textElement = new cordax_native_elements_RootElement(this);
 		this.textElement.text = this.settings.text;
 		return this.textElement;
 	}

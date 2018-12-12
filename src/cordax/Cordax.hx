@@ -1,13 +1,13 @@
 package cordax;
 
-import cordax.native.Element;
-import cordax.native.IRender;
+import cordax.native.elements.Element;
+import cordax.native.render.IRender;
 import cordax.ui.View;
 import cordax.ui.Dialog;
 
 #if js
 import js.Browser;
-import cordax.native.html.HtmlRender;
+import cordax.native.render.html.HtmlRender;
 #end
 
 /**
@@ -21,7 +21,7 @@ typedef ShowDialogSettings = {
 /**
  * Helper
  */
-@:allow(cordax.native.Element)
+@:allow(cordax.native.elements.Element)
 class Cordax {
 	/**
 	 * Elements by view id
@@ -69,6 +69,14 @@ class Cordax {
 	 */
 	public static function renderDialog(settings:ShowDialogSettings) {
 		render.renderDialog(settings.builder().toElement(), settings.onClose);
+	}
+
+	/**
+	 * Close opened dialog
+	 * @param dialog 
+	 */
+	public static function closeDialog() {
+
 	}
 
 	/**

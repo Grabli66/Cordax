@@ -1,7 +1,7 @@
 package cordax.ui;
 
 import cordax.ui.View.ViewModel;
-import cordax.native.Element;
+import cordax.native.elements.Element;
 
 typedef TextSettings = {    
     @:optional var model:TextModel;
