@@ -1,6 +1,6 @@
 package cordax.ui;
 
-import cordax.native.elements.Element;
+import cordax.native.elements.LayoutElement;
 import cordax.native.elements.RootElement;
 
 /**
@@ -34,11 +34,12 @@ class AppBar extends View {
 	 * Convert view to element
 	 */
 	public override function toElement():RootElement {
-        var res = new RootElement(this);
+        var layout = new LayoutElement(name);
+        var res = new RootElement(this, layout);
         if (settings != null) {
             if (settings.title != null) {
                 var titleElement = settings.title.toElement();
-                res.addChild(titleElement);
+                layout.addChild(titleElement);
             }
         }
         return res;

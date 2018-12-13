@@ -116,10 +116,6 @@ class View {
 	 * Convert view to element
 	 */
 	public function toElement():RootElement {
-		var res = new RootElement(this);
-		var child = render();
-		if (child != null)
-			res.addChild(child.toElement());
-		return res;
+		throw "Not implemented";
 	}
 }

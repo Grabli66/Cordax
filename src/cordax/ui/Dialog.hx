@@ -40,7 +40,9 @@ class SimpleDialog extends Dialog {
 	 * Convert view to element
 	 */
 	public override function toElement():RootElement {
-		var res = new RootElement(this);
+        var layout = new LayoutElement(name);
+
+		var res = new RootElement(this, layout);
         
         var header = new LayoutElement("header");
         var title = settings.title.toElement();
@@ -54,9 +56,9 @@ class SimpleDialog extends Dialog {
         };
         header.addChild(closeButton);
 
-        res.addChild(header);
+        layout.addChild(header);
         var content = settings.content.toElement();        
-        res.addChild(content);
+        layout.addChild(content);
 		return res;
 	}
 }

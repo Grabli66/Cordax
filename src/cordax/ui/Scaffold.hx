@@ -1,6 +1,6 @@
 package cordax.ui;
 
-import cordax.native.elements.Element;
+import cordax.native.elements.LayoutElement;
 import cordax.native.elements.RootElement;
 
 /**
@@ -35,14 +35,15 @@ class Scaffold extends View {
 	public override function toElement():RootElement {
         Cordax.setTitle(settings.title);
 
-        var res = new RootElement(this);
+        var layout = new LayoutElement(name);
+        var res = new RootElement(this, layout);
         if (settings.appBar != null) {
             var appbarElement = settings.appBar.toElement();
-            res.addChild(appbarElement);
+            layout.addChild(appbarElement);
         }
 
         var content = settings.content.toElement();
-        res.addChild(content);
+        layout.addChild(content);
         return res;
     }
 }

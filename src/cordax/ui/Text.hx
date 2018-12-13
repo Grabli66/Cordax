@@ -1,7 +1,7 @@
 package cordax.ui;
 
+import cordax.native.elements.TextElement;
 import cordax.ui.View.ViewModel;
-import cordax.native.elements.Element;
 import cordax.native.elements.RootElement;
 
 typedef TextSettings = {    
@@ -36,7 +36,7 @@ class Text extends View {
     /**
      * Text element
      */
-    private var textElement:RootElement;
+    private var textElement:TextElement;
 
     /**
      * Settings
@@ -72,8 +72,10 @@ class Text extends View {
 	 * Convert view to element
 	 */
 	public override function toElement():RootElement {
-        textElement = new RootElement(this);
+        textElement = new TextElement("text");
         textElement.text = settings.text;
-        return textElement;
+
+        var root = new RootElement(this, textElement);
+        return root;
     }
 }

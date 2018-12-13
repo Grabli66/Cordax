@@ -1,6 +1,6 @@
 package cordax.ui;
 
-import cordax.native.elements.Element;
+import cordax.native.elements.TextElement;
 import cordax.native.elements.RootElement;
 
 typedef ButtonSettings = {    
@@ -30,8 +30,10 @@ class Button extends View {
 	 * Convert view to element
 	 */
 	public override function toElement():RootElement {
-        var res = new RootElement(this);
-        res.text = settings.text;
+        var textElement = new TextElement("text");
+        textElement.text = settings.text;
+        
+        var res = new RootElement(this, textElement);
         res.onClick = settings.onClick;
         return res;
     }
