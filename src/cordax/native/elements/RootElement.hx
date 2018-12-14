@@ -22,7 +22,7 @@ class RootElement extends Element {
     public function new(view:View, attachment:Element) {
         this.attachment = attachment;
         this.viewId = view.id;
-        super(name);
+        super(view.name);
         Cordax.registerViewElement(view, this);
     }    
 }

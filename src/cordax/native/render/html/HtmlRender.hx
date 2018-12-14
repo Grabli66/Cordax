@@ -40,7 +40,12 @@ class HtmlRender implements IRender {
 	 * @param element
 	 * @param htmlElement
 	 */
-	private function applyToHtmlElement(element:Element, htmlElement:js.html.Element) {
+	private function applyToHtmlElement(element:Element, htmlElement:js.html.Element) {		
+		if ((element is RootElement)) {
+			var rootElement:RootElement = cast element;
+			element = rootElement.attachment;
+		}
+
 		var elementName = element.name.toLowerCase();
 		htmlElement.classList.add(elementName);
 		for (css in element.css) {
@@ -76,6 +81,11 @@ class HtmlRender implements IRender {
 	 * @param element
 	 */
 	private function renderChildsRecursive(root:js.html.Element, element:Element) {
+		if ((element is RootElement)) {
+			var rootElement:RootElement = cast element;
+			element = rootElement.attachment;
+		}
+
 		if ((element is LayoutElement)) {
 			var layoutElement:LayoutElement = cast element;
 			for (child in layoutElement.childs) {
@@ -94,7 +104,7 @@ class HtmlRender implements IRender {
 
 		Browser.document.body.innerHTML = "";
 		dialogElement = null;
-
+		
 		var rootElement = createHtmlElement(root);
 		renderChildsRecursive(rootElement, root);
 
