@@ -32,9 +32,9 @@ class Button extends View {
 	public override function toElement():RootElement {
         var textElement = new TextElement("text");
         textElement.text = settings.text;
+        textElement.onClick = settings.onClick;
         
-        var res = new RootElement(this, textElement);
-        res.onClick = settings.onClick;
+        var res = new RootElement(this, textElement);        
         return res;
     }
 }

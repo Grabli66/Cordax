@@ -305,8 +305,8 @@ cordax_ui_Button.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
 		var textElement = new cordax_native_elements_TextElement("text");
 		textElement.text = this.settings.text;
+		textElement.onClick = this.settings.onClick;
 		var res = new cordax_native_elements_RootElement(this,textElement);
-		res.onClick = this.settings.onClick;
 		return res;
 	}
 	,__class__: cordax_ui_Button
