@@ -1,6 +1,7 @@
 package cordax.native.render.html;
 
 
+import cordax.native.elements.ImageElement;
 import cordax.native.elements.LayoutElement;
 import cordax.native.elements.Element;
 import cordax.native.elements.TextElement;
@@ -56,6 +57,10 @@ class HtmlRender implements IRender {
 			var textElement:TextElement = cast element;
 			if (textElement.text != null)
 				htmlElement.innerText = textElement.text;
+		} else if ((element is ImageElement)) {
+			var imgElement:ImageElement = cast element;
+			if (imgElement.src != null)
+				htmlElement.setAttribute("src", imgElement.src);
 		}
 
 		if (element.onClick != null)
@@ -68,7 +73,13 @@ class HtmlRender implements IRender {
 	 * @return js.html.Element
 	 */
 	private function createHtmlElement(element:Element):js.html.Element {
-		var htmlElement = Browser.document.createDivElement();
+		var htmlElement:js.html.Element = null;
+		if ((element is ImageElement)) {
+			htmlElement = Browser.document.createImageElement();
+		} else {
+			htmlElement = Browser.document.createDivElement();
+		}
+
 		element.render = this;
 		element.nativeElement = htmlElement;
 		applyToHtmlElement(element, htmlElement);

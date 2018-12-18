@@ -70,6 +70,7 @@ cordax_Cordax.renderDialog = function(settings) {
 	cordax_Cordax.render.renderDialog(settings.builder().toElement(),settings.onClose);
 };
 cordax_Cordax.closeDialog = function() {
+	cordax_Cordax.render.closeDialog();
 };
 cordax_Cordax.setTitle = function(title) {
 	window.document.getElementsByTagName("title")[0].innerText = title;
@@ -85,6 +86,15 @@ cordax_native_elements_Element.prototype = {
 	}
 	,__class__: cordax_native_elements_Element
 };
+var cordax_native_elements_ImageElement = function(name,src) {
+	cordax_native_elements_Element.call(this,name);
+	this.src = src;
+};
+cordax_native_elements_ImageElement.__name__ = ["cordax","native","elements","ImageElement"];
+cordax_native_elements_ImageElement.__super__ = cordax_native_elements_Element;
+cordax_native_elements_ImageElement.prototype = $extend(cordax_native_elements_Element.prototype,{
+	__class__: cordax_native_elements_ImageElement
+});
 var cordax_native_elements_LayoutElement = function(name) {
 	this.childArray = [];
 	cordax_native_elements_Element.call(this,name);
@@ -156,13 +166,23 @@ cordax_native_render_html_HtmlRender.prototype = {
 			if(textElement.text != null) {
 				htmlElement.innerText = textElement.text;
 			}
+		} else if((element instanceof cordax_native_elements_ImageElement)) {
+			var imgElement = element;
+			if(imgElement.src != null) {
+				htmlElement.setAttribute("src",imgElement.src);
+			}
 		}
 		if(element.onClick != null) {
 			htmlElement.onclick = element.onClick;
 		}
 	}
 	,createHtmlElement: function(element) {
-		var htmlElement = window.document.createElement("div");
+		var htmlElement = null;
+		if((element instanceof cordax_native_elements_ImageElement)) {
+			htmlElement = window.document.createElement("img");
+		} else {
+			htmlElement = window.document.createElement("div");
+		}
 		element.render = this;
 		element.nativeElement = htmlElement;
 		this.applyToHtmlElement(element,htmlElement);
@@ -185,7 +205,7 @@ cordax_native_render_html_HtmlRender.prototype = {
 		}
 	}
 	,render: function(root) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:103:","RENDER");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:114:","RENDER");
 		window.document.body.innerHTML = "";
 		this.dialogElement = null;
 		var rootElement = this.createHtmlElement(root);
@@ -194,7 +214,7 @@ cordax_native_render_html_HtmlRender.prototype = {
 	}
 	,renderDialog: function(root,onClose) {
 		var _gthis = this;
-		console.log("src/cordax/native/render/html/HtmlRender.hx:118:","RENDER DIALOG");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:129:","RENDER DIALOG");
 		if(this.dialogElement != null) {
 			this.dialogElement.remove();
 		}
@@ -219,12 +239,12 @@ cordax_native_render_html_HtmlRender.prototype = {
 		}
 	}
 	,update: function(element) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:152:","UPDATE");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:163:","UPDATE");
 		var htmlElement = element.nativeElement;
 		this.applyToHtmlElement(element,htmlElement);
 	}
 	,replace: function(oldElement,newElement) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:161:","REPLACE");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:172:","REPLACE");
 		var htmlElement = oldElement.nativeElement;
 		var parent = htmlElement.parentElement;
 		var rootElement = this.createHtmlElement(newElement);
@@ -333,9 +353,9 @@ cordax_ui_SimpleDialog.prototype = $extend(cordax_ui_Dialog.prototype,{
 		var title = this.settings.title.toElement();
 		title.css.push("title");
 		header.addChild(title);
-		var closeButton = new cordax_native_elements_Element("close");
+		var closeButton = new cordax_native_elements_ImageElement("close","img/menu.svg");
 		closeButton.onClick = function() {
-			console.log("src/cordax/ui/Dialog.hx:54:","CLOOOSE");
+			console.log("src/cordax/ui/Dialog.hx:55:","CLOOOSE");
 			cordax_Cordax.closeDialog();
 			return;
 		};

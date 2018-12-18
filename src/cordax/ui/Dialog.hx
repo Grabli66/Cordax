@@ -1,5 +1,6 @@
 package cordax.ui;
 
+import cordax.native.elements.ImageElement;
 import cordax.native.elements.LayoutElement;
 import cordax.native.elements.Element;
 import cordax.native.elements.RootElement;
@@ -49,9 +50,8 @@ class SimpleDialog extends Dialog {
         title.css.push("title");
         header.addChild(title);
 
-        var closeButton = new Element("close");
+        var closeButton = new ImageElement("close", "img/menu.svg");
         closeButton.onClick = () -> {
-            trace("CLOOOSE");
             Cordax.closeDialog();
         };
         header.addChild(closeButton);
