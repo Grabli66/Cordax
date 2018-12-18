@@ -1,0 +1,14 @@
+{
+	"name": "cordax",
+	"license": "MIT",
+	"tags": [
+		"gui", "web", "mobile"
+	],
+	"classPath": "src",
+	"description": "Gui framework for web, mobile, desktop",
+	"contributors": [
+		"grabli66"
+	],	
+	"version": "0.1.0",
+	"url": "https://github.com/Grabli66/Cordax"
+}
