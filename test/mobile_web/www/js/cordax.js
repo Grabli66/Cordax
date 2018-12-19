@@ -110,9 +110,13 @@ cordax_native_elements_LayoutElement.prototype = $extend(cordax_native_elements_
 	}
 	,__class__: cordax_native_elements_LayoutElement
 });
-var cordax_native_elements_RootElement = function(view,attachment) {
+var cordax_native_elements_RootElement = function(view,attachment,isContainer) {
+	if(isContainer == null) {
+		isContainer = false;
+	}
 	this.attachment = attachment;
 	this.viewId = view.id;
+	this.isContainer = isContainer;
 	cordax_native_elements_Element.call(this,view.get_name());
 	cordax_Cordax.registerViewElement(view,this);
 };
@@ -148,10 +152,6 @@ cordax_native_render_html_HtmlRender.__name__ = ["cordax","native","render","htm
 cordax_native_render_html_HtmlRender.__interfaces__ = [cordax_native_render_IRender];
 cordax_native_render_html_HtmlRender.prototype = {
 	applyToHtmlElement: function(element,htmlElement) {
-		if((element instanceof cordax_native_elements_RootElement)) {
-			var rootElement = element;
-			element = rootElement.attachment;
-		}
 		var elementName = element.name.toLowerCase();
 		htmlElement.classList.add(elementName);
 		var _g = 0;
@@ -188,33 +188,58 @@ cordax_native_render_html_HtmlRender.prototype = {
 		this.applyToHtmlElement(element,htmlElement);
 		return htmlElement;
 	}
-	,renderChildsRecursive: function(root,element) {
+	,renderElement: function(element) {
 		if((element instanceof cordax_native_elements_RootElement)) {
 			var rootElement = element;
-			element = rootElement.attachment;
-		}
-		if((element instanceof cordax_native_elements_LayoutElement)) {
+			var rootContainer = null;
+			if(rootElement.isContainer) {
+				rootContainer = window.document.createElement("div");
+				this.applyToHtmlElement(rootElement,rootContainer);
+				if(rootElement.attachment != null) {
+					var childElement = this.renderElement(rootElement.attachment);
+					if(childElement != null) {
+						this.applyToHtmlElement(rootElement.attachment,childElement);
+						rootContainer.appendChild(childElement);
+					}
+				}
+			} else if(rootElement.attachment != null) {
+				rootContainer = this.renderElement(rootElement.attachment);
+				if(rootContainer != null) {
+					this.applyToHtmlElement(rootElement.attachment,rootContainer);
+				}
+			}
+			return rootContainer;
+		} else if((element instanceof cordax_native_elements_LayoutElement)) {
+			var rootContainer1 = window.document.createElement("div");
 			var layoutElement = element;
 			var child = layoutElement.get_childs();
 			while(child.hasNext()) {
 				var child1 = child.next();
-				var childDiv = this.createHtmlElement(child1);
-				this.renderChildsRecursive(childDiv,child1);
-				root.appendChild(childDiv);
+				var childElement1 = this.renderElement(child1);
+				if(childElement1 != null) {
+					this.applyToHtmlElement(child1,childElement1);
+					rootContainer1.appendChild(childElement1);
+				}
 			}
+			return rootContainer1;
+		} else if((element instanceof cordax_native_elements_TextElement)) {
+			var textElement = element;
+			var textChild = window.document.createElement("div");
+			this.applyToHtmlElement(element,textChild);
+			return textChild;
 		}
+		return null;
 	}
 	,render: function(root) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:114:","RENDER");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:144:","RENDER");
 		window.document.body.innerHTML = "";
 		this.dialogElement = null;
-		var rootElement = this.createHtmlElement(root);
-		this.renderChildsRecursive(rootElement,root);
+		var rootElement = this.renderElement(root);
 		window.document.body.appendChild(rootElement);
 	}
 	,renderDialog: function(root,onClose) {
 		var _gthis = this;
-		console.log("src/cordax/native/render/html/HtmlRender.hx:129:","RENDER DIALOG");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:161:","RENDER DIALOG");
 		if(this.dialogElement != null) {
 			this.dialogElement.remove();
 		}
@@ -230,7 +255,6 @@ cordax_native_render_html_HtmlRender.prototype = {
 		};
 		this.dialogElement.appendChild(overlay);
 		var rootElement = this.createHtmlElement(root);
-		this.renderChildsRecursive(rootElement,root);
 		this.dialogElement.appendChild(rootElement);
 	}
 	,closeDialog: function() {
@@ -239,16 +263,15 @@ cordax_native_render_html_HtmlRender.prototype = {
 		}
 	}
 	,update: function(element) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:163:","UPDATE");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:195:","UPDATE");
 		var htmlElement = element.nativeElement;
 		this.applyToHtmlElement(element,htmlElement);
 	}
 	,replace: function(oldElement,newElement) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:172:","REPLACE");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:204:","REPLACE");
 		var htmlElement = oldElement.nativeElement;
 		var parent = htmlElement.parentElement;
 		var rootElement = this.createHtmlElement(newElement);
-		this.renderChildsRecursive(rootElement,newElement);
 		parent.replaceChild(rootElement,htmlElement);
 	}
 	,__class__: cordax_native_render_html_HtmlRender
@@ -273,7 +296,13 @@ cordax_ui_View.prototype = {
 		return null;
 	}
 	,toElement: function() {
-		throw new js__$Boot_HaxeError("Not implemented");
+		var attachElement = null;
+		var attachView = this.render();
+		if(attachView != null) {
+			attachElement = attachView.toElement();
+		}
+		var root = new cordax_native_elements_RootElement(this,attachElement);
+		return root;
 	}
 	,__class__: cordax_ui_View
 };
@@ -284,13 +313,13 @@ cordax_ui_App.__name__ = ["cordax","ui","App"];
 cordax_ui_App.__super__ = cordax_ui_View;
 cordax_ui_App.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
-		var layout = new cordax_native_elements_LayoutElement(this.get_name());
-		var res = new cordax_native_elements_RootElement(this,layout);
-		res.css.push("application");
 		var child = this.render();
+		var childElement = null;
 		if(child != null) {
-			layout.addChild(child.toElement());
+			childElement = child.toElement();
 		}
+		var res = new cordax_native_elements_RootElement(this,childElement,true);
+		res.css.push("application");
 		return res;
 	}
 	,__class__: cordax_ui_App
@@ -355,7 +384,6 @@ cordax_ui_SimpleDialog.prototype = $extend(cordax_ui_Dialog.prototype,{
 		header.addChild(title);
 		var closeButton = new cordax_native_elements_ImageElement("close","img/menu.svg");
 		closeButton.onClick = function() {
-			console.log("src/cordax/ui/Dialog.hx:55:","CLOOOSE");
 			cordax_Cordax.closeDialog();
 			return;
 		};
@@ -377,7 +405,7 @@ cordax_ui_Scaffold.prototype = $extend(cordax_ui_View.prototype,{
 	toElement: function() {
 		cordax_Cordax.setTitle(this.settings.title);
 		var layout = new cordax_native_elements_LayoutElement(this.get_name());
-		var res = new cordax_native_elements_RootElement(this,layout);
+		var res = new cordax_native_elements_RootElement(this,layout,false);
 		if(this.settings.appBar != null) {
 			var appbarElement = this.settings.appBar.toElement();
 			layout.addChild(appbarElement);
@@ -555,25 +583,6 @@ haxe_ds_StringMap.prototype = {
 	}
 	,__class__: haxe_ds_StringMap
 };
-var js__$Boot_HaxeError = function(val) {
-	Error.call(this);
-	this.val = val;
-	if(Error.captureStackTrace) {
-		Error.captureStackTrace(this,js__$Boot_HaxeError);
-	}
-};
-js__$Boot_HaxeError.__name__ = ["js","_Boot","HaxeError"];
-js__$Boot_HaxeError.wrap = function(val) {
-	if((val instanceof Error)) {
-		return val;
-	} else {
-		return new js__$Boot_HaxeError(val);
-	}
-};
-js__$Boot_HaxeError.__super__ = Error;
-js__$Boot_HaxeError.prototype = $extend(Error.prototype,{
-	__class__: js__$Boot_HaxeError
-});
 var js_Boot = function() { };
 js_Boot.__name__ = ["js","Boot"];
 js_Boot.getClass = function(o) {
@@ -646,9 +655,6 @@ String.prototype.__class__ = String;
 String.__name__ = ["String"];
 Array.__name__ = ["Array"];
 var __map_reserved = {};
-Object.defineProperty(js__$Boot_HaxeError.prototype,"message",{ get : function() {
-	return String(this.val);
-}});
 cordax_Cordax.views = new haxe_ds_StringMap();
 js_Boot.__toStr = ({ }).toString;
 mobile_$web_Main.main();

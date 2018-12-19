@@ -48,7 +48,7 @@ class Text extends View {
      * @param init 
      */
     public function new(settings:TextSettings) {
-        super();
+        super();        
         this.settings = settings;
         if (this.settings.model != null) {
             this.settings.model.onChange = (changed) -> {
@@ -72,7 +72,7 @@ class Text extends View {
 	 * Convert view to element
 	 */
 	public override function toElement():RootElement {
-        textElement = new TextElement("text");
+        textElement = new TextElement("text");        
         textElement.text = settings.text;
 
         var root = new RootElement(this, textElement);

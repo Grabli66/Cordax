@@ -115,7 +115,13 @@ class View {
 	/**
 	 * Convert view to element
 	 */
-	public function toElement():RootElement {
-		throw "Not implemented";
+	public function toElement():RootElement {		
+		var attachElement:Element = null;
+		var attachView = render();
+		if (attachView != null)
+			attachElement = attachView.toElement();
+
+		var root = new RootElement(this, attachElement);
+        return root;
 	}
 }

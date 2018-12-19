@@ -1,6 +1,5 @@
 package cordax.native.render.html;
 
-
 import cordax.native.elements.ImageElement;
 import cordax.native.elements.LayoutElement;
 import cordax.native.elements.Element;
@@ -41,12 +40,7 @@ class HtmlRender implements IRender {
 	 * @param element
 	 * @param htmlElement
 	 */
-	private function applyToHtmlElement(element:Element, htmlElement:js.html.Element) {		
-		if ((element is RootElement)) {
-			var rootElement:RootElement = cast element;
-			element = rootElement.attachment;
-		}
-
+	private function applyToHtmlElement(element:Element, htmlElement:js.html.Element) {
 		var elementName = element.name.toLowerCase();
 		htmlElement.classList.add(elementName);
 		for (css in element.css) {
@@ -86,25 +80,61 @@ class HtmlRender implements IRender {
 		return htmlElement;
 	}
 
-	/**
-	 * Render childs recursively
-	 * @param root
-	 * @param element
+	/*
+		*	Root
+				Root
+					Layout
+						Text
+						Text
 	 */
-	private function renderChildsRecursive(root:js.html.Element, element:Element) {
+
+	/**
+	 * Render element
+	 * @return Element
+	 */
+	private function renderElement(element:Element):js.html.Element {
 		if ((element is RootElement)) {
 			var rootElement:RootElement = cast element;
-			element = rootElement.attachment;
-		}
+			var rootContainer:js.html.Element = null;
+			if (rootElement.isContainer) {
+				rootContainer = Browser.document.createDivElement();
+				applyToHtmlElement(rootElement, rootContainer);
+				if (rootElement.attachment != null) {
+					var childElement = renderElement(rootElement.attachment);
+					if (childElement != null) {
+						applyToHtmlElement(rootElement.attachment, childElement);
+						rootContainer.appendChild(childElement);
+					}
+				}
+			} else {
+				if (rootElement.attachment != null) {
+					rootContainer = renderElement(rootElement.attachment);
+					if (rootContainer != null)
+						applyToHtmlElement(rootElement.attachment, rootContainer);
+				}
+			}
 
-		if ((element is LayoutElement)) {
+			return rootContainer;
+		} else if ((element is LayoutElement)) {
+			var rootContainer = Browser.document.createDivElement();
 			var layoutElement:LayoutElement = cast element;
 			for (child in layoutElement.childs) {
-				var childDiv = createHtmlElement(child);
-				renderChildsRecursive(childDiv, child);
-				root.appendChild(childDiv);			
+				var childElement = renderElement(child);
+				if (childElement != null) {
+					applyToHtmlElement(child, childElement);
+					rootContainer.appendChild(childElement);
+				}
 			}
+
+			return rootContainer;
+		} else if ((element is TextElement)) {
+			var textElement:TextElement = cast element;
+			var textChild = Browser.document.createDivElement();
+			applyToHtmlElement(element, textChild);
+			return textChild;
 		}
+
+		return null;
 	}
 
 	/**
@@ -115,9 +145,11 @@ class HtmlRender implements IRender {
 
 		Browser.document.body.innerHTML = "";
 		dialogElement = null;
-		
-		var rootElement = createHtmlElement(root);
-		renderChildsRecursive(rootElement, root);
+
+		var rootElement = renderElement(root);
+
+		// var rootElement = createHtmlElement(root);
+		// renderChildsRecursive(rootElement, root);
 
 		Browser.document.body.appendChild(rootElement);
 	}
@@ -142,15 +174,15 @@ class HtmlRender implements IRender {
 		dialogElement.appendChild(overlay);
 
 		var rootElement = createHtmlElement(root);
-		renderChildsRecursive(rootElement, root);
+		//renderChildsRecursive(rootElement, root);
 		dialogElement.appendChild(rootElement);
 	}
 
 	/**
-     * Close current dialog
-     * @param id 
-     */
-    public function closeDialog():Void {
+	 * Close current dialog
+	 * @param id
+	 */
+	public function closeDialog():Void {
 		if (dialogElement != null)
 			dialogElement.remove();
 	}
@@ -173,7 +205,7 @@ class HtmlRender implements IRender {
 		var htmlElement:js.html.Element = cast oldElement.nativeElement;
 		var parent = htmlElement.parentElement;
 		var rootElement = createHtmlElement(newElement);
-		renderChildsRecursive(rootElement, newElement);
+		//renderChildsRecursive(rootElement, newElement);
 		parent.replaceChild(rootElement, htmlElement);
 	}
 }

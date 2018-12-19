@@ -17,11 +17,17 @@ class RootElement extends Element {
     public final attachment:Element;
 
     /**
+     * Is root element is container of attachment
+     */
+    public final isContainer:Bool;
+
+    /**
      * Constructor
      */
-    public function new(view:View, attachment:Element) {
+    public function new(view:View, attachment:Element, isContainer:Bool = false) {
         this.attachment = attachment;
         this.viewId = view.id;
+        this.isContainer = isContainer;
         super(view.name);
         Cordax.registerViewElement(view, this);
     }    

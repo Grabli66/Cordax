@@ -1,6 +1,6 @@
 package cordax.ui;
 
-import cordax.native.elements.LayoutElement;
+import cordax.native.elements.Element;
 import cordax.native.elements.RootElement;
 
 /**
@@ -10,13 +10,14 @@ class App extends View {
     /**
 	 * Convert view to element
 	 */
-	public override function toElement():RootElement {
-        var layout = new LayoutElement(name);
-        var res = new RootElement(this, layout);
-        res.css.push("application");
+	public override function toElement():RootElement {                
         var child = render();
+        var childElement:Element = null;
 		if (child != null)
-			layout.addChild(child.toElement());
+			childElement = child.toElement();
+
+        var res = new RootElement(this, childElement, true);
+        res.css.push("application");
         return res;
     }
 }
