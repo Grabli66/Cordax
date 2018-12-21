@@ -9,6 +9,7 @@ import cordax.ui.Text;
 import cordax.ui.Scaffold;
 import cordax.ui.AppBar;
 import cordax.ui.Button;
+import cordax.ui.ListView;
 
 class MyApp extends App {
 	var caption:String;
@@ -39,21 +40,18 @@ class MyApp extends App {
 						onClick: () -> {
 							count += 1;
 							caption = 'Clicked: ${count}';
-							// showDialog({
-							// 	builder: () -> {
-							// 		new SimpleDialog({
-							// 			title: new Text({text: "Users"}),
-							// 			content: new Text({text: "Hello"})
-							// 		});
-							// 	},
-							// 	onClose: () -> {
-							// 		trace("CLOSE DIALOG");
-							// 	}
-							// });
 							textModel.text = 'Clicked: ${count}';
 							textModel.apply();
 							setState();
 						}
+					}),
+					new ListView({
+						builder: (item) -> {
+							return new Text({
+								text: item.value
+							});
+						},
+						source: ListDataSource.fromArray([1,2,3,4,5])
 					})
 				]
 			})

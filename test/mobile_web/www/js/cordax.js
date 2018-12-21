@@ -268,7 +268,7 @@ cordax_native_render_html_HtmlRender.prototype = {
 	,__class__: cordax_native_render_html_HtmlRender
 };
 var cordax_ui_View = function() {
-	this.id = cordax_ui_Guid.generate();
+	this.id = cordax_util_Guid.generate();
 };
 cordax_ui_View.__name__ = ["cordax","ui","View"];
 cordax_ui_View.prototype = {
@@ -386,6 +386,62 @@ cordax_ui_SimpleDialog.prototype = $extend(cordax_ui_Dialog.prototype,{
 	}
 	,__class__: cordax_ui_SimpleDialog
 });
+var cordax_ui_ListItem = function(value) {
+	this.id = cordax_util_Guid.generate();
+	this.value = value;
+};
+cordax_ui_ListItem.__name__ = ["cordax","ui","ListItem"];
+cordax_ui_ListItem.prototype = {
+	__class__: cordax_ui_ListItem
+};
+var cordax_ui_IListDataSource = function() { };
+cordax_ui_IListDataSource.__name__ = ["cordax","ui","IListDataSource"];
+cordax_ui_IListDataSource.prototype = {
+	__class__: cordax_ui_IListDataSource
+};
+var cordax_ui_ListDataSource = function(items) {
+	this.items = items;
+};
+cordax_ui_ListDataSource.__name__ = ["cordax","ui","ListDataSource"];
+cordax_ui_ListDataSource.__interfaces__ = [cordax_ui_IListDataSource];
+cordax_ui_ListDataSource.fromArray = function(data) {
+	var res = [];
+	var _g = 0;
+	while(_g < data.length) {
+		var item = data[_g];
+		++_g;
+		res.push(new cordax_ui_ListItem(item));
+	}
+	return new cordax_ui_ListDataSource(res);
+};
+cordax_ui_ListDataSource.prototype = {
+	getData: function() {
+		return this.items;
+	}
+	,__class__: cordax_ui_ListDataSource
+};
+var cordax_ui_ListView = function(settings) {
+	cordax_ui_View.call(this);
+	this.settings = settings;
+};
+cordax_ui_ListView.__name__ = ["cordax","ui","ListView"];
+cordax_ui_ListView.__super__ = cordax_ui_View;
+cordax_ui_ListView.prototype = $extend(cordax_ui_View.prototype,{
+	toElement: function() {
+		var attachElement = new cordax_native_elements_LayoutElement("listview-content");
+		var root = new cordax_native_elements_RootElement(this,attachElement,true);
+		var items = this.settings.source.getData();
+		var _g = 0;
+		while(_g < items.length) {
+			var item = items[_g];
+			++_g;
+			var child = this.settings.builder(item);
+			attachElement.addChild(child.toElement());
+		}
+		return root;
+	}
+	,__class__: cordax_ui_ListView
+});
 var cordax_ui_Scaffold = function(settings) {
 	cordax_ui_View.call(this);
 	this.settings = settings;
@@ -476,20 +532,6 @@ cordax_ui_Text.prototype = $extend(cordax_ui_View.prototype,{
 	}
 	,__class__: cordax_ui_Text
 });
-var cordax_ui_Guid = function() { };
-cordax_ui_Guid.__name__ = ["cordax","ui","Guid"];
-cordax_ui_Guid.generate = function() {
-	var result = "";
-	var _g = 0;
-	while(_g < 32) {
-		var j = _g++;
-		if(j == 8 || j == 12 || j == 16 || j == 20) {
-			result += "-";
-		}
-		result += StringTools.hex(Math.floor(Math.random() * 16));
-	}
-	return result.toUpperCase();
-};
 var cordax_ui_layouts_Column = function(settings) {
 	cordax_ui_View.call(this);
 	this.settings = settings;
@@ -532,6 +574,20 @@ cordax_ui_layouts_Row.prototype = $extend(cordax_ui_View.prototype,{
 	}
 	,__class__: cordax_ui_layouts_Row
 });
+var cordax_util_Guid = function() { };
+cordax_util_Guid.__name__ = ["cordax","util","Guid"];
+cordax_util_Guid.generate = function() {
+	var result = "";
+	var _g = 0;
+	while(_g < 32) {
+		var j = _g++;
+		if(j == 8 || j == 12 || j == 16 || j == 20) {
+			result += "-";
+		}
+		result += StringTools.hex(Math.floor(Math.random() * 16));
+	}
+	return result.toUpperCase();
+};
 var haxe_IMap = function() { };
 haxe_IMap.__name__ = ["haxe","IMap"];
 var haxe_ds_StringMap = function() {
@@ -619,7 +675,9 @@ mobile_$web_MyApp.prototype = $extend(cordax_ui_App.prototype,{
 			_gthis.textModel.apply();
 			_gthis.setState();
 			return;
-		}})]})});
+		}}),new cordax_ui_ListView({ builder : function(item) {
+			return new cordax_ui_Text({ text : item.value});
+		}, source : cordax_ui_ListDataSource.fromArray([1,2,3,4,5])})]})});
 	}
 	,__class__: mobile_$web_MyApp
 });

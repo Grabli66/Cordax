@@ -1,26 +1,10 @@
 package cordax.ui;
 
 import cordax.ui.Dialog;
-import haxe.crypto.Md5;
 import cordax.Cordax;
+import cordax.util.Guid;
 import cordax.native.elements.Element;
 import cordax.native.elements.RootElement;
-
-class Guid {
-	public static function generate():String {
-		var result = "";
-
-		for (j in 0...32) {
-			if (j == 8 || j == 12 || j == 16 || j == 20) {
-				result += "-";
-			}
-
-			result += StringTools.hex(Math.floor(Math.random() * 16));
-		}
-
-		return result.toUpperCase();
-	}
-}
 
 /**
  * Model of view
