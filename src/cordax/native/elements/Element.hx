@@ -4,19 +4,29 @@ import cordax.ui.View;
 import cordax.native.render.IRender;
 
 /**
+ * Info, used by native renders
+ */
+typedef NativeData = {
+    /**
+     * Native render
+     */
+    var render:IRender;
+
+    /**
+     * Native element
+     */
+    var nativeElement:Dynamic;
+}
+
+/**
  * Native element that will be rendered
  */
 @:allow(cordax.native.render.IRender)
 class Element {
     /**
-     * Native element
+     * Native data for rendering
      */
-    private var nativeElement:Dynamic;
-
-    /**
-     * Render to update element
-     */
-    private var render:IRender;
+    private var nativeData:NativeData;
 
     /**
      * Element name
@@ -44,6 +54,8 @@ class Element {
      * Update native element
      */
     public function update() {
-        render.update(this);
+        if (nativeData == null)
+            trace(this);
+        nativeData.render.update(this);
     }
 }

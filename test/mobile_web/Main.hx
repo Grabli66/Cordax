@@ -39,20 +39,20 @@ class MyApp extends App {
 						onClick: () -> {
 							count += 1;
 							caption = 'Clicked: ${count}';
-							showDialog({
-								builder: () -> {
-									new SimpleDialog({
-										title: new Text({text: "Users"}),
-										content: new Text({text: "Hello"})
-									});
-								},
-								onClose: () -> {
-									trace("CLOSE DIALOG");
-								}
-							});
-							// textModel.text = 'Clicked: ${count}';
-							// textModel.apply();
-							// setState();
+							// showDialog({
+							// 	builder: () -> {
+							// 		new SimpleDialog({
+							// 			title: new Text({text: "Users"}),
+							// 			content: new Text({text: "Hello"})
+							// 		});
+							// 	},
+							// 	onClose: () -> {
+							// 		trace("CLOSE DIALOG");
+							// 	}
+							// });
+							textModel.text = 'Clicked: ${count}';
+							textModel.apply();
+							setState();
 						}
 					})
 				]

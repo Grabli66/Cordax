@@ -82,7 +82,10 @@ var cordax_native_elements_Element = function(name) {
 cordax_native_elements_Element.__name__ = ["cordax","native","elements","Element"];
 cordax_native_elements_Element.prototype = {
 	update: function() {
-		this.render.update(this);
+		if(this.nativeData == null) {
+			console.log("src/cordax/native/elements/Element.hx:58:",this);
+		}
+		this.nativeData.render.update(this);
 	}
 	,__class__: cordax_native_elements_Element
 };
@@ -175,18 +178,7 @@ cordax_native_render_html_HtmlRender.prototype = {
 		if(element.onClick != null) {
 			htmlElement.onclick = element.onClick;
 		}
-	}
-	,createHtmlElement: function(element) {
-		var htmlElement = null;
-		if((element instanceof cordax_native_elements_ImageElement)) {
-			htmlElement = window.document.createElement("img");
-		} else {
-			htmlElement = window.document.createElement("div");
-		}
-		element.render = this;
-		element.nativeElement = htmlElement;
-		this.applyToHtmlElement(element,htmlElement);
-		return htmlElement;
+		element.nativeData = { render : this, nativeElement : htmlElement};
 	}
 	,renderElement: function(element) {
 		if((element instanceof cordax_native_elements_RootElement)) {
@@ -230,7 +222,7 @@ cordax_native_render_html_HtmlRender.prototype = {
 		return null;
 	}
 	,render: function(root) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:136:","RENDER");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:122:","RENDER");
 		window.document.body.innerHTML = "";
 		this.dialogElement = null;
 		var rootElement = this.renderElement(root);
@@ -238,7 +230,7 @@ cordax_native_render_html_HtmlRender.prototype = {
 	}
 	,renderDialog: function(root,onClose) {
 		var _gthis = this;
-		console.log("src/cordax/native/render/html/HtmlRender.hx:150:","RENDER DIALOG");
+		console.log("src/cordax/native/render/html/HtmlRender.hx:136:","RENDER DIALOG");
 		if(this.dialogElement != null) {
 			this.dialogElement.remove();
 		}
@@ -262,13 +254,13 @@ cordax_native_render_html_HtmlRender.prototype = {
 		}
 	}
 	,update: function(element) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:183:","UPDATE");
-		var htmlElement = element.nativeElement;
+		console.log("src/cordax/native/render/html/HtmlRender.hx:169:","UPDATE");
+		var htmlElement = element.nativeData.nativeElement;
 		this.applyToHtmlElement(element,htmlElement);
 	}
 	,replace: function(oldElement,newElement) {
-		console.log("src/cordax/native/render/html/HtmlRender.hx:192:","REPLACE");
-		var htmlElement = oldElement.nativeElement;
+		console.log("src/cordax/native/render/html/HtmlRender.hx:178:","REPLACE");
+		var htmlElement = oldElement.nativeData.nativeElement;
 		var parent = htmlElement.parentElement;
 		var rootElement = this.renderElement(newElement);
 		parent.replaceChild(rootElement,htmlElement);
@@ -623,12 +615,9 @@ mobile_$web_MyApp.prototype = $extend(cordax_ui_App.prototype,{
 		return new cordax_ui_Scaffold({ title : "App", appBar : new cordax_ui_AppBar({ title : new cordax_ui_Text({ text : "Test app"})}), content : new cordax_ui_layouts_Column({ childs : [new cordax_ui_Text({ model : this.textModel, text : this.caption}),new cordax_ui_Button({ text : "Click me!", onClick : function() {
 			_gthis.count += 1;
 			_gthis.caption = "Clicked: " + _gthis.count;
-			_gthis.showDialog({ builder : function() {
-				return new cordax_ui_SimpleDialog({ title : new cordax_ui_Text({ text : "Users"}), content : new cordax_ui_Text({ text : "Hello"})});
-			}, onClose : function() {
-				console.log("test/mobile_web/Main.hx:50:","CLOSE DIALOG");
-				return;
-			}});
+			_gthis.textModel.set_text("Clicked: " + _gthis.count);
+			_gthis.textModel.apply();
+			_gthis.setState();
 			return;
 		}})]})});
 	}

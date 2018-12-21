@@ -59,25 +59,11 @@ class HtmlRender implements IRender {
 
 		if (element.onClick != null)
 			htmlElement.onclick = element.onClick;
-	}
 
-	/**
-	 * Create new html element
-	 * @param element
-	 * @return js.html.Element
-	 */
-	private function createHtmlElement(element:Element):js.html.Element {
-		var htmlElement:js.html.Element = null;
-		if ((element is ImageElement)) {
-			htmlElement = Browser.document.createImageElement();
-		} else {
-			htmlElement = Browser.document.createDivElement();
-		}
-
-		element.render = this;
-		element.nativeElement = htmlElement;
-		applyToHtmlElement(element, htmlElement);
-		return htmlElement;
+		element.nativeData = {
+			render: this,
+			nativeElement: htmlElement
+		};
 	}
 
 	/**
@@ -181,7 +167,7 @@ class HtmlRender implements IRender {
 	 */
 	public function update(element:Element) {
 		trace("UPDATE");
-		var htmlElement:js.html.Element = cast element.nativeElement;
+		var htmlElement:js.html.Element = cast element.nativeData.nativeElement;
 		applyToHtmlElement(element, htmlElement);
 	}
 
@@ -190,7 +176,7 @@ class HtmlRender implements IRender {
 	 */
 	public function replace(oldElement:Element, newElement:Element):Void {
 		trace("REPLACE");
-		var htmlElement:js.html.Element = cast oldElement.nativeElement;
+		var htmlElement:js.html.Element = cast oldElement.nativeData.nativeElement;
 		var parent = htmlElement.parentElement;
 		var rootElement = renderElement(newElement);
 		parent.replaceChild(rootElement, htmlElement);
