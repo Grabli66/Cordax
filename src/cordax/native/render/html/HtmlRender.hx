@@ -80,14 +80,6 @@ class HtmlRender implements IRender {
 		return htmlElement;
 	}
 
-	/*
-		*	Root
-				Root
-					Layout
-						Text
-						Text
-	 */
-
 	/**
 	 * Render element
 	 * @return Element
@@ -128,7 +120,6 @@ class HtmlRender implements IRender {
 
 			return rootContainer;
 		} else if ((element is TextElement)) {
-			var textElement:TextElement = cast element;
 			var textChild = Browser.document.createDivElement();
 			applyToHtmlElement(element, textChild);
 			return textChild;
@@ -141,15 +132,13 @@ class HtmlRender implements IRender {
 	 * Render document to native
 	 */
 	public function render(root:RootElement) {
+		// TODO: trace elements tree
 		trace("RENDER");
 
 		Browser.document.body.innerHTML = "";
 		dialogElement = null;
 
 		var rootElement = renderElement(root);
-
-		// var rootElement = createHtmlElement(root);
-		// renderChildsRecursive(rootElement, root);
 
 		Browser.document.body.appendChild(rootElement);
 	}
@@ -173,8 +162,7 @@ class HtmlRender implements IRender {
 		};
 		dialogElement.appendChild(overlay);
 
-		var rootElement = createHtmlElement(root);
-		//renderChildsRecursive(rootElement, root);
+		var rootElement = renderElement(root);		
 		dialogElement.appendChild(rootElement);
 	}
 
@@ -204,8 +192,7 @@ class HtmlRender implements IRender {
 		trace("REPLACE");
 		var htmlElement:js.html.Element = cast oldElement.nativeElement;
 		var parent = htmlElement.parentElement;
-		var rootElement = createHtmlElement(newElement);
-		//renderChildsRecursive(rootElement, newElement);
+		var rootElement = renderElement(newElement);
 		parent.replaceChild(rootElement, htmlElement);
 	}
 }
