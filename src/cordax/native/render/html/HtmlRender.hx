@@ -6,6 +6,7 @@ import cordax.native.elements.Element;
 import cordax.native.elements.TextElement;
 import cordax.native.elements.RootElement;
 import cordax.ui.View;
+import cordax.util.MacroHelper;
 import js.Browser;
 
 /**
@@ -28,7 +29,7 @@ class HtmlRender implements IRender {
 	/**
 	 * Element dialogs
 	 */
-	private var dialogElement:js.html.Element;
+	var dialogElement:js.html.Element;
 
 	/**
 	 * Constructor
@@ -40,7 +41,7 @@ class HtmlRender implements IRender {
 	 * @param element
 	 * @param htmlElement
 	 */
-	private function applyToHtmlElement(element:Element, htmlElement:js.html.Element) {
+	function applyToHtmlElement(element:Element, htmlElement:js.html.Element) {
 		var elementName = element.name.toLowerCase();
 		htmlElement.classList.add(elementName);
 		for (css in element.css) {
@@ -70,7 +71,7 @@ class HtmlRender implements IRender {
 	 * Render element
 	 * @return Element
 	 */
-	private function renderElement(element:Element):js.html.Element {
+	function renderElement(element:Element):js.html.Element {
 		if ((element is RootElement)) {
 			var rootElement:RootElement = cast element;
 			var rootContainer:js.html.Element = null;
@@ -112,6 +113,16 @@ class HtmlRender implements IRender {
 		}
 
 		return null;
+	}	
+
+	/**
+	 * Append base styles to body
+	 */
+	function appendBaseStyles() {
+		var styleNode = Browser.document.createStyleElement();
+		styleNode.type = "text/css";
+		styleNode.textContent = FileUtil.getFileText("./assets/cordax-mobile.css");
+		Browser.document.body.appendChild(styleNode);
 	}
 
 	/**
@@ -119,12 +130,13 @@ class HtmlRender implements IRender {
 	 */
 	public function render(root:RootElement) {
 		// TODO: trace elements tree
-		trace("RENDER");
+		trace("RENDER");		
 
 		Browser.document.body.innerHTML = "";
 		dialogElement = null;
 
 		var rootElement = renderElement(root);
+		appendBaseStyles();
 
 		Browser.document.body.appendChild(rootElement);
 	}
