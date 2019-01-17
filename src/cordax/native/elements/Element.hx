@@ -1,6 +1,6 @@
 package cordax.native.elements;
 
-import cordax.ui.View;
+import cordax.native.elements.styles.ElementStyle;
 import cordax.native.render.IRender;
 
 /**
@@ -37,6 +37,11 @@ class Element {
      * Css classes
      */
     public final css = new Array<String>();
+
+    /**
+     * Local styles of element
+     */
+    public final style:ElementStyle = {};
 
     /**
      * On click callback
