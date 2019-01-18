@@ -18,6 +18,11 @@ typedef NativeData = {
     var nativeElement:Dynamic;
 }
 
+typedef ChangeInfo = {
+    var param:String;
+    var value:Dynamic;
+}
+
 /**
  * Native element that will be rendered
  */
@@ -26,7 +31,12 @@ class Element {
     /**
      * Native data for rendering
      */
-    private var nativeData:NativeData;
+    private var nativeData:NativeData;  
+
+    /**
+     * Parameter changed info
+     */
+    private var changeInfo = new Array<ChangeInfo>();
 
     /**
      * Element name
@@ -49,10 +59,24 @@ class Element {
     public var onClick:() -> Void;
 
     /**
+     * Notify
+     */
+    function notify(param:String, value:Dynamic) {
+
+    }
+
+    /**
      * Constructor
      */
     public function new(name:String) {
         this.name = name;
+    }
+
+    /**
+     * Return all changes     
+     */
+    public function getChanges():Array<ChangeInfo> {
+        return null;
     }
 
     /**
